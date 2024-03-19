@@ -1,4 +1,4 @@
-package com.example.universedefinitivo;
+package com.example.universedefinitivo.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.universedefinitivo.ui.book.BookActivity;
 import com.example.universedefinitivo.R;
+import com.example.universedefinitivo.ui.book.BookActivity;
 
 public class HomeFragment extends Fragment {
 

@@ -94,11 +94,13 @@
         android:id="@+id/bookmark_button"
         android:layout_width="43dp"
         android:layout_height="46dp"
+        android:layout_marginStart="332dp"
+        android:layout_marginTop="308dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
-        app:tint="@color/marron_titulos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/guardar_instagram"
-        tools:layout_editor_absoluteX="332dp"
-        tools:layout_editor_absoluteY="310dp" />
+        app:tint="@color/marron_titulos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

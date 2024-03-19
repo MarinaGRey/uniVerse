@@ -9,10 +9,8 @@ import android.widget.ImageButton;
 
 import com.example.universedefinitivo.R; // Make sure to import R if it's in a different package
 import com.example.universedefinitivo.ui.formulario.FormularioActivity;
-import com.example.universedefinitivo.ui.home.HomeActivity;
 import com.example.universedefinitivo.ui.login.LoginActivity;
-import com.example.universedefinitivo.ui.map.MapActivity;
-import com.example.universedefinitivo.ui.profile.YourPostsActivity;
+
 
 public class SavedActivity extends AppCompatActivity {
 

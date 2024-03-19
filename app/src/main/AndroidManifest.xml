@@ -30,7 +30,7 @@
         <activity android:name=".ui.formulario.FormularioActivity"/>
         <activity android:name=".ui.book.BookActivity"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".HomeFragment"/>
+        <activity android:name=".ui.home.HomeFragment"/>
 
 
 

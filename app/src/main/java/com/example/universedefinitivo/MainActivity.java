@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.universedefinitivo.databinding.ActivityMainBinding;
-import com.example.universedefinitivo.R;
+import com.example.universedefinitivo.ui.home.HomeFragment;
+import com.example.universedefinitivo.ui.map.MapFragment;
+import com.example.universedefinitivo.ui.profile.ProfileFragment;
+import com.example.universedefinitivo.ui.search.SearchFragment;
 
 
 public class MainActivity extends AppCompatActivity {

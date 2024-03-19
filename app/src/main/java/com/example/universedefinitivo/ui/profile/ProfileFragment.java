@@ -1,4 +1,4 @@
-package com.example.universedefinitivo;
+package com.example.universedefinitivo.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,16 +10,11 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.universedefinitivo.R;
 import com.example.universedefinitivo.ui.formulario.FormularioActivity;
 import com.example.universedefinitivo.ui.login.LoginActivity;
-import com.example.universedefinitivo.ui.profile.SavedActivity;
-import com.example.universedefinitivo.ui.profile.YourPostsActivity;
 
 public class ProfileFragment extends Fragment {
-    private Button yourPostsButton;
-    private Button savedButton;
-    private Button addPostButton;
-    private ImageButton logoutButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,10 +23,10 @@ public class ProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Find views in the fragment layout
-        yourPostsButton = rootView.findViewById(R.id.your_posts_button);
-        savedButton = rootView.findViewById(R.id.saved_button);
-        addPostButton = rootView.findViewById(R.id.add_post_button);
-        logoutButton = rootView.findViewById(R.id.logout_button);
+        Button yourPostsButton = rootView.findViewById(R.id.your_posts_button);
+        Button savedButton = rootView.findViewById(R.id.saved_button);
+        Button addPostButton = rootView.findViewById(R.id.add_post_button);
+        ImageButton logoutButton = rootView.findViewById(R.id.logout_button);
 
         // Set OnClickListener for yourPostsButton
         yourPostsButton.setOnClickListener(new View.OnClickListener() {
