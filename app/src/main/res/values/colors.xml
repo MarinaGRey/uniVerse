@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gris">#7D7D7D</color>
+    <color name="naranja_categoria_map">#D87607</color>
+    <color name="naranja_estrellas">#BC560A</color>
+    <color name="marron_buy_botones">#AA6558</color>
+    <color name="marron_titulos">#77463D</color>
+    <color name="verde_bookmark">#8EA870</color>
+    <color name="login_fondo_profile_sin_select">#E4C3BD</color>
+    <color name="color_fondo">#F6ECEA</color>
+    <color name="profile_seleccionado">#B39B97</color>
+    <color name="add_post">#D3A096</color>
 </resources>
