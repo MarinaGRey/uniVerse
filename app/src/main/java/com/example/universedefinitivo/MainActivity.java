@@ -1,15 +1,17 @@
 package com.example.universedefinitivo;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.universedefinitivo.databinding.ActivityMainBinding;
+import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import com.example.universedefinitivo.databinding.ActivityMainBinding;
+import com.example.universedefinitivo.R;
 
-import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-    ActivityMainBinding binding;
+
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,29 +19,29 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Replace the initial fragment
         replaceFragment(new HomeFragment());
-        binding.bottomNavigationView.setBackground(null);
 
-        binding.bottomNavigationView.setOnItemReselectedListener(item -> {
-
+        // Set listener for BottomNavigationView
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home_button:
                     replaceFragment(new HomeFragment());
-                    break;
+                    return true;
 
                 case R.id.search_button:
                     replaceFragment(new SearchFragment());
-                    break;
+                    return true;
 
                 case R.id.map_button:
                     replaceFragment(new MapFragment());
-                    break;
+                    return true;
 
                 case R.id.profile_button:
                     replaceFragment(new ProfileFragment());
-                    break;
+                    return true;
             }
-            return true;
+            return false;
         });
     }
 

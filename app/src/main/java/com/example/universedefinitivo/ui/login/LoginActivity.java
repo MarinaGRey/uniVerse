@@ -4,9 +4,9 @@ import android.view.View;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.universedefinitivo.MainActivity;
 import com.example.universedefinitivo.R;
-import com.example.universedefinitivo.ui.home.HomeActivity;
-import com.example.universedefinitivo.ui.profile.YourPostsActivity;
+
 
 public class LoginActivity extends AppCompatActivity {
     @Override
@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         // Button Log-in -> Go to main activity
         View button = findViewById(R.id.button);
         button.setOnClickListener(view -> {
-            Intent intent= new Intent(getBaseContext(), HomeActivity.class);
+            Intent intent= new Intent(getBaseContext(), MainActivity.class);
             startActivity(intent);
 
         });
