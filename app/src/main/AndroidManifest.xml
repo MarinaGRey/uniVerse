@@ -23,10 +23,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.profile.YourPostsActivity"/>
-        <activity android:name=".ui.profile.SavedActivity"/>
-        <activity android:name=".ui.map.MapActivity"/>
-        <activity android:name=".ui.home.HomeActivity"/>
         <activity android:name=".ui.formulario.FormularioActivity"/>
         <activity android:name=".ui.book.BookActivity"/>
         <activity android:name=".MainActivity"/>

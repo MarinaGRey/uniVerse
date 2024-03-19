@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.universedefinitivo.R;
-import com.example.universedefinitivo.ui.profile.YourPostsActivity;
+import com.example.universedefinitivo.ui.book.BookActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,7 @@ public class FormularioActivity extends Activity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FormularioActivity.this, YourPostsActivity.class);
+                Intent intent = new Intent(FormularioActivity.this, BookActivity.class);
                 startActivity(intent);
             }
         });

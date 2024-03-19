@@ -1,6 +1,7 @@
 package com.example.universedefinitivo.ui.profile;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.universedefinitivo.R;
@@ -32,9 +34,11 @@ public class ProfileFragment extends Fragment {
         yourPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Start the YourPostsActivity when yourPostsButton is clicked
-                Intent intent = new Intent(getActivity(), YourPostsActivity.class);
-                startActivity(intent);
+
+                int pressedColor = ContextCompat.getColor(v.getContext(), R.color.profile_seleccionado);
+                int notpressedColor = ContextCompat.getColor(v.getContext(), R.color.login_fondo_profile_sin_select);
+                yourPostsButton.setBackgroundColor(pressedColor);
+                savedButton.setBackgroundColor(notpressedColor);
             }
         });
 
@@ -43,8 +47,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Start the SavedActivity when savedButton is clicked
-                Intent intent = new Intent(getActivity(), SavedActivity.class);
-                startActivity(intent);
+                int pressedColor = ContextCompat.getColor(v.getContext(), R.color.profile_seleccionado);
+                int notpressedColor = ContextCompat.getColor(v.getContext(), R.color.login_fondo_profile_sin_select);
+                savedButton.setBackgroundColor(pressedColor);
+                yourPostsButton.setBackgroundColor(notpressedColor);
             }
         });
 
