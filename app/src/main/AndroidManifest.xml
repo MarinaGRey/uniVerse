@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.profile.YourPostsActivity"/>
+        <activity android:name=".ui.profile.SavedActivity"/>
+        <activity android:name=".ui.map.MapActivity"/>
+        <activity android:name=".ui.home.HomeActivity"/>
+        <activity android:name=".ui.formulario.FormularioActivity"/>
+        <activity android:name=".ui.book.BookActivity"/>
+
+
     </application>
 
 </manifest>

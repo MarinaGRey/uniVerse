@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00FFFFFF">
+
+
+    <View
+        android:id="@+id/background_book"
+        android:layout_width="322dp"
+        android:layout_height="132dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="168dp"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/cover_book_view"
+        android:layout_width="166dp"
+        android:layout_height="169dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="148dp"
+        android:backgroundTint="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/portada_libro" />
+
+    <TextView
+        android:id="@+id/title_book_view"
+        android:layout_width="102dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginTop="176dp"
+        android:text="Title: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/author_book_view"
+        android:layout_width="99dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginTop="204dp"
+        android:text="Author: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_book_view"
+        android:layout_width="199dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="232dp"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="-325dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
