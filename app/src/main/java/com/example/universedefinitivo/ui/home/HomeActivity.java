@@ -16,7 +16,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        setContentView(R.layout.fragment_home);
 
         // ImageButton searchButton = findViewById(R.id.imageButton_search);
         ImageButton bookButton = findViewById(R.id.cover_book_view);
