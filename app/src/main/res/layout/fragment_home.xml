@@ -76,7 +76,9 @@
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/logo_sin_fondo"
         tools:layout_editor_absoluteX="-15dp"
-        tools:layout_editor_absoluteY="-21dp" />
+        tools:layout_editor_absoluteY="-21dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/Title_home"
