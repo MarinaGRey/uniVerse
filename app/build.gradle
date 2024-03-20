@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.universedefinitivo'
+    namespace 'com.example.universe'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.universedefinitivo"
+        applicationId "com.example.universe"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -26,6 +26,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures{
+        viewBinding = true
+    }
+
+
+    viewBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {

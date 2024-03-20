@@ -13,7 +13,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="156dp"
         android:layout_marginTop="64dp"
-        android:text="userName"
+        android:text="@string/username"
         android:textColor="@color/marron_titulos"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="144dp"
         android:layout_marginTop="172dp"
-        android:text="Author: "
+        android:text="@string/author"
         android:textColor="@color/marron_titulos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
         android:ems="10"
         android:foregroundTint="@color/black"
         android:inputType="text"
-        android:text="Category"
+        android:text="@string/category"
         android:textColor="@color/marron_titulos"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
         android:layout_marginStart="200dp"
         android:layout_marginTop="300dp"
         android:background="@color/marron_buy_botones"
-        android:text="Buy"
+        android:text="@string/buy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
         android:layout_marginTop="380dp"
-        android:text="Review:"
+        android:text="@string/review"
         android:textColor="@color/marron_titulos"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="164dp"
         android:layout_marginTop="544dp"
-        android:text="Comments:"
+        android:text="@string/comments"
         android:textColor="@color/marron_titulos"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +118,7 @@
         android:layout_height="46dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="424dp"
-        android:text="review text"
+        android:text="@string/review_text"
         android:textColor="@color/marron_buy_botones"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:layout_marginTop="580dp"
-        android:text="User:"
+        android:text="@string/user"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -141,7 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="112dp"
         android:layout_marginTop="580dp"
-        android:text="comment text"
+        android:text="@string/comment_text"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -155,9 +155,9 @@
         android:backgroundTint="@color/black"
         android:ems="10"
         android:inputType="text"
-        android:text="add comment..."
+        android:text="@string/add_comment"
         android:textColor="@color/gris"
-        android:textSize="10sp"
+        android:textSize="11sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -167,7 +167,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="144dp"
         android:layout_marginTop="144dp"
-        android:text="Title:"
+        android:text="@string/title"
         android:textColor="@color/marron_titulos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -239,7 +239,7 @@
         android:layout_marginStart="300dp"
         android:layout_marginTop="608dp"
         android:backgroundTint="@color/marron_buy_botones"
-        android:text="Add"
+        android:text="@string/add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

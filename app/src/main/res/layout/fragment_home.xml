@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="172dp"
         android:layout_marginTop="256dp"
-        android:text="Author: "
+        android:text="@string/author"
         android:textColor="@color/marron_titulos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="172dp"
         android:layout_marginTop="232dp"
-        android:text="Title: "
+        android:text="@string/title"
         android:textColor="@color/marron_titulos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -76,7 +76,9 @@
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/logo_sin_fondo"
         tools:layout_editor_absoluteX="-15dp"
-        tools:layout_editor_absoluteY="-21dp" />
+        tools:layout_editor_absoluteY="-21dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/Title_home"
@@ -84,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="136dp"
         android:layout_marginTop="76dp"
-        android:text="Welcome back!!"
+        android:text="@string/welcome_back"
         android:textColor="@color/marron_titulos"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,11 +96,13 @@
         android:id="@+id/bookmark_button"
         android:layout_width="43dp"
         android:layout_height="46dp"
+        android:layout_marginStart="332dp"
+        android:layout_marginTop="308dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
-        android:tint="@color/marron_titulos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/guardar_instagram"
-        tools:layout_editor_absoluteX="332dp"
-        tools:layout_editor_absoluteY="310dp" />
+        app:tint="@color/marron_titulos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
