@@ -13,9 +13,23 @@
         android:layout_height="523dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/logo_sin_fondo"
+        android:src="@drawable/logo_login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="508dp"
+        android:ems="10"
+        tools:text="Enter password..."
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/button"
@@ -28,18 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="508dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Enter password..." />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
