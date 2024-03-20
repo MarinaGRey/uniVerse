@@ -71,24 +71,25 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="155dp"
-        android:layout_height="205dp"
+        android:layout_width="130dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="4dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/logo_sin_fondo"
-        tools:layout_editor_absoluteX="-15dp"
-        tools:layout_editor_absoluteY="-21dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_sin_fondo" />
 
     <TextView
         android:id="@+id/Title_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="76dp"
-        android:text="@string/welcome_back"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/UniVerse"
         android:textColor="@color/marron_titulos"
-        android:textSize="34sp"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
