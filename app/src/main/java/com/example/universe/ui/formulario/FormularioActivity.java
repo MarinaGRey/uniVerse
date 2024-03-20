@@ -21,7 +21,7 @@ public class FormularioActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.formulario); // Change to your layout file name
+        setContentView(R.layout.formulario);
 
         Button postButton = findViewById(R.id.post_button);
 

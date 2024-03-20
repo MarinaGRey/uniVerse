@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Universedefinitivo"
         tools:targetApi="31">
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.example.universe.ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +23,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.formulario.FormularioActivity"/>
-        <activity android:name=".ui.book.BookActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".ui.home.HomeFragment"/>
+        <activity android:name="com.example.universe.ui.formulario.FormularioActivity"/>
+        <activity android:name="com.example.universe.ui.book.BookActivity"/>
+        <activity android:name="com.example.universe.MainActivity"/>
+        <activity android:name="com.example.universe.ui.home.HomeFragment"/>
+        <activity android:name="com.example.universe.ui.search.SearchFragment"/>
 
     </application>
 
