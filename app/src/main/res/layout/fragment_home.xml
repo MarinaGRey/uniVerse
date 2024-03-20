@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="172dp"
         android:layout_marginTop="256dp"
-        android:text="Author: "
+        android:text="@string/author"
         android:textColor="@color/marron_titulos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="172dp"
         android:layout_marginTop="232dp"
-        android:text="Title: "
+        android:text="@string/title"
         android:textColor="@color/marron_titulos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="136dp"
         android:layout_marginTop="76dp"
-        android:text="Welcome back!!"
+        android:text="@string/welcome_back"
         android:textColor="@color/marron_titulos"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"

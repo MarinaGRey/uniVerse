@@ -2,4 +2,32 @@
     <string name="app_name">universedefinitivo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_in">Log-in</string>
+    <string name="enter_email">Enter email...</string>
+    <string name="username">userName</string>
+    <string name="author">Author:</string>
+    <string name="category">Category</string>
+    <string name="buy">Buy</string>
+    <string name="review">Review:</string>
+    <string name="comments">Comments:</string>
+    <string name="review_text">review text</string>
+    <string name="user">User:</string>
+    <string name="comment_text">comment text</string>
+    <string name="add_comment">add comment...</string>
+    <string name="title">Title:</string>
+    <string name="add">Add</string>
+    <string name="post_your_new_recommendation">Post your new recommendation</string>
+    <string name="post">Post</string>
+    <string name="where_to_buy_it">Where to buy it?</string>
+    <string name="choose_image">Choose image</string>
+    <string name="welcome_back">Welcome back!!</string>
+    <string name="add_new_location">Add new location</string>
+    <string name="name">Name</string>
+    <string name="description">Description:</string>
+    <string name="address">Address:</string>
+    <string name="or_add_your_own_special_spot">Or add your own special spot</string>
+    <string name="find_books_near_you">Find books near you...</string>
+    <string name="your_posts">your posts</string>
+    <string name="add_post">add post</string>
+    <string name="saved">saved</string>
 </resources>

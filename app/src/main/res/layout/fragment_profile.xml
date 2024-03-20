@@ -47,7 +47,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="176dp"
         android:backgroundTint="@color/profile_seleccionado"
-        android:text="your posts"
+        android:text="@string/your_posts"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +58,7 @@
         android:layout_marginStart="160dp"
         android:layout_marginTop="536dp"
         android:backgroundTint="@color/add_post"
-        android:text="add post"
+        android:text="@string/add_post"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
         android:layout_marginTop="76dp"
-        android:text="username"
+        android:text="@string/username"
         android:textColor="@color/marron_titulos"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
         android:layout_marginStart="204dp"
         android:layout_marginTop="176dp"
         android:backgroundTint="@color/login_fondo_profile_sin_select"
-        android:text="saved"
+        android:text="@string/saved"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

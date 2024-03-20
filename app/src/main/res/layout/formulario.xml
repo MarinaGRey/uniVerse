@@ -13,7 +13,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="44dp"
         android:gravity="center"
-        android:text="Post your new recommendation"
+        android:text="@string/post_your_new_recommendation"
         android:textColor="@color/marron_titulos"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
         android:layout_marginStart="160dp"
         android:layout_marginTop="588dp"
         android:backgroundTint="@color/add_post"
-        android:text="Post"
+        android:text="@string/post"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +58,7 @@
         android:layout_marginTop="516dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Where to buy it?"
+        android:text="@string/where_to_buy_it"
         android:textColor="@color/marron_buy_botones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -71,7 +71,7 @@
         android:layout_marginTop="332dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Review"
+        android:text="@string/review"
         android:textColor="@color/marron_buy_botones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -96,7 +96,7 @@
         android:layout_marginTop="192dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Author"
+        android:text="@string/author"
         android:textColor="@color/marron_buy_botones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -137,7 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="256dp"
-        android:text="Category"
+        android:text="@string/category"
         android:textColor="@color/marron_titulos"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +149,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="456dp"
-        android:text="Choose image"
+        android:text="@string/choose_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -161,7 +161,7 @@
         android:layout_marginTop="128dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Title"
+        android:text="@string/title"
         android:textColor="@color/marron_buy_botones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
