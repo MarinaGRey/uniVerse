@@ -69,7 +69,7 @@ public class FormularioActivity extends Activity {
             public void onClick(View v) {
                 // Create an intent to pick a file from the device
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*"); // Set the MIME type to allow any type of file
+                intent.setType("*/*");
 
                 // Start the activity for result
                 startActivityForResult(Intent.createChooser(intent, "Select File"), PICK_FILE_REQUEST);
@@ -84,10 +84,7 @@ public class FormularioActivity extends Activity {
         // Check if the request code is the same as what is passed here
         if (requestCode == PICK_FILE_REQUEST) {
             if (resultCode == RESULT_OK && data != null) {
-                // Get the URI of the selected file
-                // You can do whatever you want with this URI, such as saving it or processing it further
-                // Example:
-                // Uri selectedFileUri = data.getData();
+
             }
         }
     }
