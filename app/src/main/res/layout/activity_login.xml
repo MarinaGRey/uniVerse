@@ -15,8 +15,10 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="4dp"
         android:src="@drawable/logo_mobile_removebg"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.796" />
 
     <Button
         android:id="@+id/sign_up_button"
