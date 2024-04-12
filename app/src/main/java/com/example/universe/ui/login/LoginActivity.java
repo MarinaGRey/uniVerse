@@ -76,23 +76,37 @@ public class LoginActivity extends AppCompatActivity {
                 EditText email = findViewById(R.id.editTextTextEmailAddress);
                 EditText password = findViewById(R.id.editTextTextPassword);
 
-                mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // User creation success
-                                    Intent intent = new Intent(getBaseContext(), HomeFragment.class);
-                                    startActivity(intent);
-                                } else {
-                                    // User creation failed
-                                    Toast.makeText(LoginActivity.this, "Login failed.",
-                                            Toast.LENGTH_SHORT).show();
+
+
+                if (email == null) {
+
+                    Toast.makeText(LoginActivity.this, "Empty email.", Toast.LENGTH_SHORT).show();
+                } else if (password == null) {
+                    Toast.makeText(LoginActivity.this, "Empty password.", Toast.LENGTH_SHORT).show();
+                } else {
+                    mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // User login success
+                                        Intent intent = new Intent(LoginActivity.this, HomeFragment.class);
+                                        startActivity(intent);
+                                    } else {
+                                        // User login failed
+                                        Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
+
+
+
+
+
+
 
 
 
