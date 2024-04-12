@@ -1,4 +1,5 @@
 package com.example.universe.ui.login;
+import android.app.MediaRouteButton;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
@@ -28,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         View sign_up_button = findViewById(R.id.sign_up_button);
         EditText username_text = findViewById(R.id.username_text);
         username_text.setVisibility(View.GONE);
+        View confirm_button = findViewById(R.id.confirm_button);
+        confirm_button.setVisibility(View.GONE);
 
         sign_up_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
                 // Toggle visibility of map modal layout
                 if (username_text.getVisibility() == View.GONE) {
                     username_text.setVisibility(View.VISIBLE);
+                    login_button.setVisibility(View.GONE);
+                    sign_up_button.setVisibility(View.GONE);
+                    confirm_button.setVisibility(View.VISIBLE);
                 }
             }
         });
