@@ -85,10 +85,10 @@
         android:layout_marginTop="468dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:text="Enter password..."
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Enter password..." />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

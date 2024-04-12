@@ -1,17 +1,14 @@
 package com.example.universe.ui.login;
-import android.app.MediaRouteButton;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.universe.MainActivity;
 import com.example.universe.R;
-import com.example.universe.ui.map.MapFragment;
+import com.example.universe.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,13 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         if(getSupportActionBar() != null)
             getSupportActionBar().hide();
 
-        // Button Log-in -> Go to main activity
         View login_button = findViewById(R.id.login_button);
-        login_button.setOnClickListener(view -> {
-            Intent intent= new Intent(getBaseContext(), MainActivity.class);
-            startActivity(intent);
-        });
-
         View sign_up_button = findViewById(R.id.sign_up_button);
         EditText username_text = findViewById(R.id.username_text);
         username_text.setVisibility(View.GONE);
@@ -67,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // User creation success
-                                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                    Intent intent = new Intent(getBaseContext(), HomeFragment.class);
                                     startActivity(intent);
                                 } else {
                                     // User creation failed
@@ -78,5 +69,33 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+
+        login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText email = findViewById(R.id.editTextTextEmailAddress);
+                EditText password = findViewById(R.id.editTextTextPassword);
+
+                mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // User creation success
+                                    Intent intent = new Intent(getBaseContext(), HomeFragment.class);
+                                    startActivity(intent);
+                                } else {
+                                    // User creation failed
+                                    Toast.makeText(LoginActivity.this, "Login failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
+
+
+
+
     }
 }
