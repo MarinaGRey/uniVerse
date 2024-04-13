@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.universe.MainActivity;
 import com.example.universe.R;
 import com.example.universe.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,58 +51,81 @@ public class LoginActivity extends AppCompatActivity {
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText email = findViewById(R.id.editTextTextEmailAddress);
-                EditText password = findViewById(R.id.editTextTextPassword);
+                EditText emailEditText = findViewById(R.id.editTextTextEmailAddress);
+                EditText passwordEditText = findViewById(R.id.editTextTextPassword);
 
-                mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+
+                if (email.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Empty email.", Toast.LENGTH_SHORT).show();
+                    return; // Stop further execution
+                }
+
+                if (password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Empty password.", Toast.LENGTH_SHORT).show();
+                    return; // Stop further execution
+                }
+
+                // Perform user creation
+                mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // User creation success
-                                    Intent intent = new Intent(getBaseContext(), HomeFragment.class);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
+                                    finish(); // Finish login activity so user can't go back to it using back button
                                 } else {
                                     // User creation failed
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
             }
         });
 
+
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText email = findViewById(R.id.editTextTextEmailAddress);
-                EditText password = findViewById(R.id.editTextTextPassword);
+                EditText emailEditText = findViewById(R.id.editTextTextEmailAddress);
+                EditText passwordEditText = findViewById(R.id.editTextTextPassword);
 
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
 
-
-                if (email == null) {
-
+                if (email.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Empty email.", Toast.LENGTH_SHORT).show();
-                } else if (password == null) {
-                    Toast.makeText(LoginActivity.this, "Empty password.", Toast.LENGTH_SHORT).show();
-                } else {
-                    mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // User login success
-                                        Intent intent = new Intent(LoginActivity.this, HomeFragment.class);
-                                        startActivity(intent);
-                                    } else {
-                                        // User login failed
-                                        Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    return; // Stop further execution
                 }
+
+                if (password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Empty password.", Toast.LENGTH_SHORT).show();
+                    return; // Stop further execution
+                }
+
+                // Perform login
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // User login success
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish(); // Finish login activity so user can't go back to it using back button
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
+
+
 
 
 
