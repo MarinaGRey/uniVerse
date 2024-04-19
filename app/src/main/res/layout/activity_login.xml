@@ -39,7 +39,7 @@
         android:layout_marginTop="400dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="@string/enter_email"
+        android:hint="@string/enter_email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,7 +62,7 @@
         android:layout_marginTop="528dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Enter username..."
+        android:hint="Enter username..."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,7 +85,7 @@
         android:layout_marginTop="468dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="Enter password..."
+        android:hint="Enter password..."
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
