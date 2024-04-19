@@ -10,11 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.universe.MainActivity;
 import com.example.universe.R;
-import com.example.universe.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class LoginActivity extends AppCompatActivity {
     @Override
@@ -51,32 +56,51 @@ public class LoginActivity extends AppCompatActivity {
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Retrieve email, password, and username from EditText fields
                 EditText emailEditText = findViewById(R.id.editTextTextEmailAddress);
                 EditText passwordEditText = findViewById(R.id.editTextTextPassword);
+                EditText usernameEditText = findViewById(R.id.username_text);
 
-                String email = emailEditText.getText().toString().trim();
-                String password = passwordEditText.getText().toString().trim();
+                final String email = emailEditText.getText().toString().trim();
+                final String password = passwordEditText.getText().toString().trim();
+                final String username = usernameEditText.getText().toString().trim();
 
-                if (email.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Empty email.", Toast.LENGTH_SHORT).show();
+                // Check if email or password is empty
+                if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Something is empty.", Toast.LENGTH_SHORT).show();
                     return; // Stop further execution
                 }
 
-                if (password.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Empty password.", Toast.LENGTH_SHORT).show();
-                    return; // Stop further execution
-                }
-
-                // Perform user creation
+                // Perform user creation with Firebase Authentication
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // User creation success
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish(); // Finish login activity so user can't go back to it using back button
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (user != null) {
+                                        String userId = user.getUid(); // Get Firebase-generated UID
+
+                                        // Store additional user details (username) in Firestore
+                                        Map<String, String> userData = new HashMap<>();
+                                        userData.put("username", username);
+                                        userData.put("email", email);
+
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        db.collection("users")
+                                                .document(userId)
+                                                .set(userData);
+
+
+                                        // Proceed to the main activity
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish(); // Finish login activity
+                                    } else {
+                                        // Handle null user
+                                        Toast.makeText(LoginActivity.this, "User is null.", Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
                                     // User creation failed
                                     Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -85,6 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+
+
 
 
         login_button.setOnClickListener(new View.OnClickListener() {
