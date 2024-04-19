@@ -37,16 +37,13 @@ public class LoginActivity extends AppCompatActivity {
         View confirm_button = findViewById(R.id.confirm_button);
         confirm_button.setVisibility(View.GONE);
 
-        sign_up_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle visibility of map modal layout
-                if (username_text.getVisibility() == View.GONE) {
-                    username_text.setVisibility(View.VISIBLE);
-                    login_button.setVisibility(View.GONE);
-                    sign_up_button.setVisibility(View.GONE);
-                    confirm_button.setVisibility(View.VISIBLE);
-                }
+        sign_up_button.setOnClickListener(v -> {
+            // Toggle visibility of map modal layout
+            if (username_text.getVisibility() == View.GONE) {
+                username_text.setVisibility(View.VISIBLE);
+                login_button.setVisibility(View.GONE);
+                sign_up_button.setVisibility(View.GONE);
+                confirm_button.setVisibility(View.VISIBLE);
             }
         });
 

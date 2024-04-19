@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 
 import com.example.universe.R;
@@ -88,4 +90,45 @@ public class FormularioActivity extends Activity {
             }
         }
     }
+
+
+    EditText title_write = findViewById(R.id.title_write);
+    final String title = title_write.getText().toString().trim();
+
+    EditText author_write = findViewById(R.id.author_write);
+    final String author = author_write.getText().toString().trim();
+
+    EditText review_write = findViewById(R.id.review_write);
+    final String review = review_write.getText().toString().trim();
+
+    EditText buy_link = findViewById(R.id.buy_link);
+    final String link = buy_link.getText().toString().trim();
+
+    Spinner categories = findViewById(R.id.categories);
+    final String category = categories.getSelectedItem().toString();
+
+    // Assuming you have a RatingBar named ratingBar in your layout XML file
+    RatingBar ratingBar = findViewById(R.id.ratingBar_formulario_view);
+
+    // Get the rating (number of stars)
+    float rating = ratingBar.getRating();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
