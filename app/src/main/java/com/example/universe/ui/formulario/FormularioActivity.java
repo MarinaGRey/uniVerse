@@ -60,12 +60,12 @@ public class FormularioActivity extends Activity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FormularioActivity.this, BookActivity.class);
-                startActivity(intent);
+                // Get data from views and start BookActivity
+                sendDataToBookActivity();
             }
         });
 
-        Button insertImageButton = findViewById(R.id.insert_image_button); // Change to your button ID
+        Button insertImageButton = findViewById(R.id.insert_image_button);
         insertImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,49 +86,44 @@ public class FormularioActivity extends Activity {
         // Check if the request code is the same as what is passed here
         if (requestCode == PICK_FILE_REQUEST) {
             if (resultCode == RESULT_OK && data != null) {
-
+                // Handle selected file here if needed
             }
         }
     }
 
+    private void sendDataToBookActivity() {
+        EditText title_write = findViewById(R.id.title_write);
+        String title = title_write.getText().toString().trim();
 
-    EditText title_write = findViewById(R.id.title_write);
-    final String title = title_write.getText().toString().trim();
+        EditText author_write = findViewById(R.id.author_write);
+        String author = author_write.getText().toString().trim();
 
-    EditText author_write = findViewById(R.id.author_write);
-    final String author = author_write.getText().toString().trim();
+        EditText review_write = findViewById(R.id.review_write);
+        String review = review_write.getText().toString().trim();
 
-    EditText review_write = findViewById(R.id.review_write);
-    final String review = review_write.getText().toString().trim();
+        EditText buy_link = findViewById(R.id.buy_link);
+        String link = buy_link.getText().toString().trim();
 
-    EditText buy_link = findViewById(R.id.buy_link);
-    final String link = buy_link.getText().toString().trim();
+        Spinner categories = findViewById(R.id.categories);
+        String category = categories.getSelectedItem().toString();
 
-    Spinner categories = findViewById(R.id.categories);
-    final String category = categories.getSelectedItem().toString();
+        // Assuming you have a RatingBar named ratingBar in your layout XML file
+        RatingBar ratingBar = findViewById(R.id.ratingBar_formulario_view);
 
-    // Assuming you have a RatingBar named ratingBar in your layout XML file
-    RatingBar ratingBar = findViewById(R.id.ratingBar_formulario_view);
+        // Get the rating (number of stars)
+        float rating = ratingBar.getRating();
 
-    // Get the rating (number of stars)
-    float rating = ratingBar.getRating();
+        // Create intent to start BookActivity
+        Intent intent = new Intent(FormularioActivity.this, BookActivity.class);
+        // Pass data to BookActivity using extras or intent extras
+        intent.putExtra("title", title);
+        intent.putExtra("author", author);
+        intent.putExtra("review", review);
+        intent.putExtra("link", link);
+        intent.putExtra("category", category);
+        intent.putExtra("rating", rating);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // Start BookActivity
+        startActivity(intent);
+    }
 }
