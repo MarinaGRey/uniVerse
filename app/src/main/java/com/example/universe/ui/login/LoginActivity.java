@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.universe.MainActivity;
 import com.example.universe.R;
+import com.example.universe.ui.formulario.FormularioActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,6 +30,17 @@ public class LoginActivity extends AppCompatActivity {
 
         if(getSupportActionBar() != null)
             getSupportActionBar().hide();
+
+        // PROVISIONAL ENTER
+        View enter = findViewById(R.id.my_image_view);
+        enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish(); // Finish login activity
+            }
+        });
 
         View login_button = findViewById(R.id.login_button);
         View sign_up_button = findViewById(R.id.sign_up_button);
