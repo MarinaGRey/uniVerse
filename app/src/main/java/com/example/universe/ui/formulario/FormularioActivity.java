@@ -9,28 +9,57 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.universe.R;
 import com.example.universe.ui.book.BookActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FormularioActivity extends Activity {
 
     private static final int PICK_FILE_REQUEST = 2;
+
+    // Firebase
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private String userId;
+
+    // Views
+    private EditText title_write;
+    private EditText author_write;
+    private EditText review_write;
+    private EditText buy_link;
+    private Spinner categories;
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulario);
 
-        Button postButton = findViewById(R.id.post_button);
+        // Get the current user's ID
+        userId = auth.getCurrentUser().getUid();
+
+        // Initialize Views
+        title_write = findViewById(R.id.title_write);
+        author_write = findViewById(R.id.author_write);
+        review_write = findViewById(R.id.review_write);
+        buy_link = findViewById(R.id.buy_link);
+        categories = findViewById(R.id.categories);
+        ratingBar = findViewById(R.id.ratingBar_formulario_view);
 
         // Initialize Spinner
-        Spinner spinner = findViewById(R.id.categories);
-
-        // Define your list of categories
         List<String> categoriesList = new ArrayList<>();
         categoriesList.add("History");
         categoriesList.add("Thriller");
@@ -48,20 +77,17 @@ public class FormularioActivity extends Activity {
         categoriesList.add("Travel");
         categoriesList.add("Other");
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesList);
-
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categories.setAdapter(adapter);
 
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-
+        // Set Click Listeners
+        Button postButton = findViewById(R.id.post_button);
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get data from views and start BookActivity
-                sendDataToBookActivity();
+                // Send data to Firestore and BookActivity
+                sendDataToFirestore();
             }
         });
 
@@ -91,26 +117,52 @@ public class FormularioActivity extends Activity {
         }
     }
 
-    private void sendDataToBookActivity() {
-        EditText title_write = findViewById(R.id.title_write);
+    private void sendDataToFirestore() {
+        // Get data from form fields
         String title = title_write.getText().toString().trim();
-
-        EditText author_write = findViewById(R.id.author_write);
         String author = author_write.getText().toString().trim();
-
-        EditText review_write = findViewById(R.id.review_write);
         String review = review_write.getText().toString().trim();
-
-        EditText buy_link = findViewById(R.id.buy_link);
         String link = buy_link.getText().toString().trim();
-
-        Spinner categories = findViewById(R.id.categories);
         String category = categories.getSelectedItem().toString();
+        float rating = ratingBar.getRating();
 
-        // Assuming you have a RatingBar named ratingBar in your layout XML file
-        RatingBar ratingBar = findViewById(R.id.ratingBar_formulario_view);
+        // Add post data to Firestore
+        Map<String, Object> post = new HashMap<>();
+        post.put("title", title);
+        post.put("author", author);
+        post.put("review", review);
+        post.put("link", link);
+        post.put("category", category);
+        post.put("rating", rating);
 
-        // Get the rating (number of stars)
+        // Add the post document to the current user's "posts" subcollection
+        db.collection("users").document(userId).collection("posts")
+                .add(post)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        // Post added successfully
+                        Toast.makeText(FormularioActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
+                        // Proceed to BookActivity
+                        sendDataToBookActivity();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle errors
+                        Toast.makeText(FormularioActivity.this, "Error adding post", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void sendDataToBookActivity() {
+        // Get data from form fields
+        String title = title_write.getText().toString().trim();
+        String author = author_write.getText().toString().trim();
+        String review = review_write.getText().toString().trim();
+        String link = buy_link.getText().toString().trim();
+        String category = categories.getSelectedItem().toString();
         float rating = ratingBar.getRating();
 
         // Create intent to start BookActivity

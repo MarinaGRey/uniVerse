@@ -31,4 +31,6 @@
     <string name="saved">saved</string>
     <string name="universe">uniVerse</string>
     <string name="confirm">Confirm</string>
+    <string name="enter_username">Enter username...</string>
+    <string name="enter_password">Enter password...</string>
 </resources>

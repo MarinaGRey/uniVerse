@@ -36,7 +36,7 @@
         android:layout_marginStart="160dp"
         android:layout_marginTop="588dp"
         android:backgroundTint="@color/add_post"
-        android:text="@string/post"
+        android:hint="@string/post"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +48,7 @@
         android:layout_marginTop="516dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/where_to_buy_it"
+        android:hint="@string/where_to_buy_it"
         android:textColor="@color/marron_buy_botones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
         android:layout_marginTop="332dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/review"
+        android:hint="@string/review"
         android:textColor="@color/marron_buy_botones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +86,7 @@
         android:layout_marginTop="192dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/author"
+        android:hint="@string/author"
         android:textColor="@color/marron_buy_botones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -121,7 +121,7 @@
         android:layout_marginTop="128dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/title"
+        android:hint="@string/title"
         android:textColor="@color/marron_buy_botones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
