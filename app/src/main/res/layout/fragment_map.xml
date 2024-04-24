@@ -7,6 +7,8 @@
     android:background="@color/color_fondo">
 
 
+
+
     <FrameLayout
         android:id="@+id/modal_layout"
         android:layout_width="437dp"
@@ -143,13 +145,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
-        android:layout_width="407dp"
-        android:layout_height="368dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_text1"
-        tools:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="406dp"
+        android:layout_height="358dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="164dp">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
