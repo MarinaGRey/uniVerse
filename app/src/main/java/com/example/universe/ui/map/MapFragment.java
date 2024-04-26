@@ -8,25 +8,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.universe.R;
 
-
-import android.os.Bundle;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PointOfInterest;
-
-public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnPoiClickListener {
+public class MapFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,13 +26,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         ImageButton closeModal = rootView.findViewById(R.id.close_button);
         FrameLayout mapModalLayout = rootView.findViewById(R.id.modal_layout);
         Button mapPostButton = rootView.findViewById(R.id.map_post_button);
-
-        super.onCreate(savedInstanceState);
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        assert mapFragment != null;
-        mapFragment.getMapAsync(this);
 
         // Set initial visibility of map modal layout
         mapModalLayout.setVisibility(View.GONE);
@@ -86,22 +66,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         return rootView;
     }
 
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        map.setOnPoiClickListener(this);
-
-        float zoomLevel = map.getMaxZoomLevel() - 5;
-        LatLng uc3m = new LatLng(40.332690215919904, -3.765110001822394); // UC3M Leganés
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(uc3m, zoomLevel));
-    }
-
-    @Override
-    public void onPoiClick(@NonNull PointOfInterest poi) {
-        Toast.makeText(getActivity(), "Clicked: " + poi.name + "\nPlace ID:" + poi.placeId + "\nLatitude:" +
-                        poi.latLng.latitude + " Longitude:" + poi.latLng.longitude, Toast.LENGTH_SHORT)
-                .show();
-
-
-    }
 }

@@ -5,10 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
 
     <application
@@ -34,10 +32,9 @@
         <activity android:name="com.example.universe.ui.formulario.FormularioActivity"/>
         <activity android:name="com.example.universe.ui.book.BookActivity"/>
         <activity android:name="com.example.universe.MainActivity"/>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCa027p8nsih1TGjiZjNPFZVLYl4tjAY5E" />
+            android:value="AIzaSyCa027p8nsih1TGjiZjNPFZVLYl4tjAY5E"  />
 
     </application>
 
