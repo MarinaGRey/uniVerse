@@ -42,9 +42,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Start BookActivity
-                startActivity(new Intent(getActivity(), BookActivity.class));
+                Intent intent = new Intent(getActivity(), BookActivity.class);
+                startActivity(intent);
             }
         });
+
+
+
 
         // Return the inflated view
         return rootView;

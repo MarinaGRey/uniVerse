@@ -6,6 +6,25 @@
     android:layout_height="match_parent"
     android:background="@color/color_fondo">
 
+    <LinearLayout
+        android:layout_width="406dp"
+        android:layout_height="358dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+
+
+
 
     <FrameLayout
         android:id="@+id/modal_layout"
@@ -103,27 +122,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </FrameLayout>
 
     <TextView
         android:id="@+id/map_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="516dp"
         android:text="@string/or_add_your_own_special_spot"
         android:textColor="@color/marron_titulos"
         android:textSize="24sp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="538dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
 
     <ImageButton
         android:id="@+id/add_location_button"
         android:layout_width="57dp"
         android:layout_height="103dp"
         android:layout_marginStart="344dp"
-        android:layout_marginTop="480dp"
+        android:layout_marginTop="505dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,13 +162,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
-        android:layout_width="407dp"
-        android:layout_height="368dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_text1"
-        tools:visibility="visible" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
