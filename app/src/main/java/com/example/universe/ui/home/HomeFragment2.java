@@ -11,13 +11,13 @@ import android.widget.ImageButton;
 import com.example.universe.R;
 import com.example.universe.ui.book.BookActivity;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment2 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home2, container, false);
 
         // Find the ImageButtons in the fragment layout
         ImageButton bookButton = rootView.findViewById(R.id.cover_book_view);

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.universe.databinding.ActivityMainBinding;
 import com.example.universe.ui.home.HomeFragment;
+import com.example.universe.ui.home.HomeFragment2;
 import com.example.universe.ui.map.MapFragment;
 import com.example.universe.ui.profile.ProfileFragment;
 import com.example.universe.ui.search.SearchFragment;
