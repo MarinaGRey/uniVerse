@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.universe.R;
 import com.example.universe.ui.book.BookActivity;
 import com.example.universe.ui.book.BookAdapter;
+import com.example.universe.ui.book.BookCustomItemDecoration;
 import com.example.universe.ui.book.Book_unit;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +50,15 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = rootView.findViewById(R.id.recycler_view_books);
+        // Set the margins for the first item and other items
+        int firstItemMarginTop = 300; // Margin for the first item (adjust as needed)
+        int otherItemsMarginTop = 0; // Margin for other items (typically zero or minimal)
+
+        // Add the custom ItemDecoration to the RecyclerView
+        recyclerView.addItemDecoration(new BookCustomItemDecoration(firstItemMarginTop, otherItemsMarginTop));
+
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
 
@@ -131,7 +141,7 @@ public class HomeFragment extends Fragment {
                                                 String title = postDoc.getString("title");
                                                 String author = postDoc.getString("author");
                                                 String cover = postDoc.getString("cover");
-                                                String reviewer = postDoc.getString("reviewer");
+                                                String reviewer = userDoc.getString("username");
                                                 Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
                                                 float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
                                                 Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
