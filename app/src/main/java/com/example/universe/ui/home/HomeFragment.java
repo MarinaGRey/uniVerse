@@ -65,6 +65,7 @@ public class HomeFragment extends Fragment {
             intent.putExtra("reviewer", book.getReviewer());
             intent.putExtra("cover", book.getCover());
             intent.putExtra("rating", book.getRating());
+            intent.putExtra("postId", book.getPostId());
 
             getContext().startActivity(intent); // Start the new activity
                     },
@@ -135,9 +136,10 @@ public class HomeFragment extends Fragment {
                                                 float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
                                                 Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
                                                 boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
+                                                String postId = postDoc.getString("postId");
 
 
-                                                books.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked));
+                                                books.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId));
                                                 Log.d(TAG, "books: " + books); // Log post ID
 
                                             }

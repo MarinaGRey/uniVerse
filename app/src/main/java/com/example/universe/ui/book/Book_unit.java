@@ -10,15 +10,17 @@ public class Book_unit {
     private String reviewer;
     private float rating;
     private boolean isBookmarked;
+    private String postId;
 
 
-    public Book_unit(String title, String author, String cover, String reviewer, float rating, boolean isBookmarked) {
+    public Book_unit(String title, String author, String cover, String reviewer, float rating, boolean isBookmarked, String postId) {
         this.title = title;
         this.author = author;
         this.cover = cover;
         this.reviewer = reviewer;
         this.rating = rating;
         this.isBookmarked = isBookmarked;
+        this.postId = postId;
 
     }
 
@@ -71,6 +73,16 @@ public class Book_unit {
 
     public void setBookmarked(boolean isBookmarked) {
         this.isBookmarked = isBookmarked; // Set bookmark state
+    }
+
+
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 
 
