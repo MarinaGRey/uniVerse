@@ -52,7 +52,9 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Define the adapter with a click listener that starts BookActivity
-        bookAdapter = new BookAdapter(books, book -> {
+        bookAdapter = new BookAdapter(books,
+                // Handle item click, like navigating to BookActivity
+                book -> {
             Intent intent = new Intent(getContext(), BookActivity.class);
 
             // Pass additional data to the activity
@@ -63,7 +65,17 @@ public class HomeFragment extends Fragment {
             intent.putExtra("rating", book.getRating());
 
             getContext().startActivity(intent); // Start the new activity
-        });
+                    },
+
+                book -> {
+                    // Toggle bookmark state
+                    book.setBookmarked(!book.isBookmarked()); // Toggle the state
+
+                    // persist the bookmark state to Firestore or Shared Preferences
+                    // update Firestore document to reflect the bookmark change
+                    bookAdapter.notifyDataSetChanged(); // Refresh the RecyclerView to reflect changes
+                });
+
 
         recyclerView.setAdapter(bookAdapter);
 
@@ -119,9 +131,11 @@ public class HomeFragment extends Fragment {
                                                 String reviewer = postDoc.getString("reviewer");
                                                 Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
                                                 float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
+                                                Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
+                                                boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
 
 
-                                                books.add(new Book_unit(title, author, cover, reviewer, rating));
+                                                books.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked));
                                                 Log.d(TAG, "books: " + books); // Log post ID
 
                                             }
