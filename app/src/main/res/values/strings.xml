@@ -33,4 +33,5 @@
     <string name="confirm">Confirm</string>
     <string name="enter_username">Enter username...</string>
     <string name="enter_password">Enter password...</string>
+    <string name="location_permission_missing">Location permission is required to access your device\'s location.</string>
 </resources>
