@@ -1,5 +1,8 @@
 package com.example.universe.ui.book;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,13 +81,17 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         // Set the bookmark state based on the data model
         int bookmarkIcon = book.isBookmarked() ? R.drawable.guardar_instagram : R.drawable.marcador_de_forma_negra;
         holder.bookmarkButton.setImageResource(bookmarkIcon);
+        Log.d(TAG, "bookmarkIcon: " + bookmarkIcon); // Log post ID
+
 
         // Handle bookmark button clicks
         holder.bookmarkButton.setOnClickListener(v -> {
             if (bookmarkClickListener != null) {
                 bookmarkClickListener.onBookmarkClick(book);
             }
+
         });
+
 
 
 

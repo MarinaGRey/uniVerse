@@ -49,7 +49,9 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = rootView.findViewById(R.id.recycler_view_books);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+
 
         // Define the adapter with a click listener that starts BookActivity
         bookAdapter = new BookAdapter(books,
