@@ -20,8 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BookActivity extends AppCompatActivity {
 
@@ -49,7 +51,8 @@ public class BookActivity extends AppCompatActivity {
         Button buy = findViewById(R.id.buyButton_book_view);
         ImageView cover_place = findViewById(R.id.cover_book);
         RatingBar rating_place = findViewById(R.id.book_review);
-
+        EditText comment = findViewById(R.id.add_comment);
+        Button add_comment = findViewById(R.id.add_comment_button);
 
         // Retrieve intent extras
         Intent intent = getIntent();
@@ -104,6 +107,60 @@ public class BookActivity extends AppCompatActivity {
                             openUrlInBrowser(buyUrl);
                         });
 
+                        // Set onClickListener for the add comment button
+                        add_comment.setOnClickListener(view -> {
+                            // Retrieve the comment text from the EditText
+                            String commentText = comment.getText().toString().trim();
+
+                            // Check if the comment is not empty
+                            if (!commentText.isEmpty()) {
+                                // Get the current user ID from Firebase Authentication
+                                String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                // Create a new document reference for the comment
+                                DocumentReference commentRef = postRef.collection("comments").document();
+
+                                // Fetch the username associated with the current user ID
+                                db.collection("users").document(currentUserId).get()
+                                        .addOnSuccessListener(documentSnapshot -> {
+                                            if (documentSnapshot.exists()) {
+                                                String currentUserName = documentSnapshot.getString("username");
+
+                                                // Create a Map to hold the comment data
+                                                Map<String, Object> commentData = new HashMap<>();
+                                                commentData.put("text", commentText);
+                                                commentData.put("username", currentUserName); // Add the username to the comment data
+
+                                                // Add the comment data to the Firestore database
+                                                commentRef.set(commentData)
+                                                        .addOnSuccessListener(aVoid -> {
+                                                            // Comment added successfully
+                                                            Log.d(TAG, "Comment added to Firestore: " + commentText);
+                                                            // Clear the EditText after adding the comment
+                                                            comment.setText("");
+                                                            // You can also update the UI to reflect the newly added comment if needed
+                                                        })
+                                                        .addOnFailureListener(e -> {
+                                                            // Failed to add comment
+                                                            Log.e(TAG, "Error adding comment to Firestore: " + e.getMessage());
+                                                            // Handle the error
+                                                        });
+                                            } else {
+                                                // Document does not exist
+                                                Log.d(TAG, "User document does not exist for user ID: " + currentUserId);
+                                                // Handle the case if the user document doesn't exist
+                                            }
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // Failed to fetch username
+                                            Log.e(TAG, "Error fetching username from Firestore: " + e.getMessage());
+                                            // Handle the error
+                                        });
+                            } else {
+                                // Comment is empty, show a message or handle the case as needed
+                            }
+                        });
+
                     } else {
                         // Document does not exist
                     }
@@ -113,14 +170,11 @@ public class BookActivity extends AppCompatActivity {
             });
         }
     }
+
     // Method to open a URL in a web browser
     private void openUrlInBrowser(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);
-
-
     }
-
-
 }
