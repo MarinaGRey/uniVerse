@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +48,7 @@ public class BookActivity extends AppCompatActivity {
         TextView category = findViewById(R.id.category_book_view);
         Button buy = findViewById(R.id.buyButton_book_view);
         ImageView cover_place = findViewById(R.id.cover_book);
+        RatingBar rating_place = findViewById(R.id.book_review);
 
 
         // Retrieve intent extras
@@ -74,6 +76,7 @@ public class BookActivity extends AppCompatActivity {
                         String category_text = document.getString("category");
                         String coverUrl = document.getString("image_url");
                         String buyUrl = document.getString("link");
+                        Double rating = document.getDouble("rating");
 
                         // Populate views with book details
                         title.setText(title_text);
@@ -81,6 +84,14 @@ public class BookActivity extends AppCompatActivity {
                         reviewer.setText(reviewer_name);
                         review.setText(review_text);
                         category.setText(category_text);
+
+                        float maxRating = 5.0f; // Maximum rating of the RatingBar
+                        Log.d(TAG, "initial rate: " + rating);
+
+                        float final_rating = (float) (rating / maxRating) * maxRating;
+                        Log.d(TAG, "final rate: " + final_rating);
+
+                        rating_place.setRating(final_rating);
 
                         // Load the image using Glide
                         Glide.with(this /* context */)
