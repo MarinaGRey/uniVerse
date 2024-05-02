@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -53,6 +54,7 @@ public class BookActivity extends AppCompatActivity {
         RatingBar rating_place = findViewById(R.id.book_review);
         EditText comment = findViewById(R.id.add_comment);
         Button add_comment = findViewById(R.id.add_comment_button);
+        LinearLayout comments_layout = findViewById(R.id.comment_layout);
 
         // Retrieve intent extras
         Intent intent = getIntent();
@@ -107,6 +109,19 @@ public class BookActivity extends AppCompatActivity {
                             openUrlInBrowser(buyUrl);
                         });
 
+                        // Fetch existing comments from Firestore
+                        postRef.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
+                            for (DocumentSnapshot commentSnapshot : queryDocumentSnapshots) {
+                                String username = commentSnapshot.getString("username");
+                                String commentText = commentSnapshot.getString("text");
+
+                                // Create a TextView for each existing comment and add it to the LinearLayout
+                                TextView commentTextView = new TextView(BookActivity.this);
+                                commentTextView.setText(username + ": " + commentText);
+                                comments_layout.addView(commentTextView);
+                            }
+                        });
+
                         // Set onClickListener for the add comment button
                         add_comment.setOnClickListener(view -> {
                             // Retrieve the comment text from the EditText
@@ -136,9 +151,14 @@ public class BookActivity extends AppCompatActivity {
                                                         .addOnSuccessListener(aVoid -> {
                                                             // Comment added successfully
                                                             Log.d(TAG, "Comment added to Firestore: " + commentText);
+
+                                                            // After adding the comment, dynamically add it to the UI
+                                                            TextView newCommentView = new TextView(BookActivity.this);
+                                                            newCommentView.setText(currentUserName + ": " + commentText);
+                                                            comments_layout.addView(newCommentView);
+
                                                             // Clear the EditText after adding the comment
                                                             comment.setText("");
-                                                            // You can also update the UI to reflect the newly added comment if needed
                                                         })
                                                         .addOnFailureListener(e -> {
                                                             // Failed to add comment
