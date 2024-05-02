@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_view_profile);
 
         // Set the margins for the first item and other items
-        int firstItemMarginTop = 2000; // Margin for the first item (adjust as needed)
+        int firstItemMarginTop = 0; // Margin for the first item (adjust as needed)
         int otherItemsMarginTop = 0; // Margin for other items (typically zero or minimal)
 
         // Add the custom ItemDecoration to the RecyclerView
@@ -92,6 +92,7 @@ public class ProfileFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
+        recyclerView.setVisibility(View.VISIBLE);
 
 
         Log.d(TAG, "Start bookAdapter");
