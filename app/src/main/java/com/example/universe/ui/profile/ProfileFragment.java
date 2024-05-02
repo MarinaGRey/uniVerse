@@ -224,7 +224,7 @@ public class ProfileFragment extends Fragment {
                                 String postId = postDoc.getId();
 
 
-                                userPosts.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId));
+                                userPosts.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId,userId));
                                 Log.d(TAG, "userPosts: " + userPosts);
                             }
 
@@ -272,7 +272,7 @@ public class ProfileFragment extends Fragment {
                             String postId = postDoc.getId();
 
 
-                            savedPosts.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId));
+                            savedPosts.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId,userId));
 
                         }
                         bookAdapter.notifyDataSetChanged(); // Notify adapter of data change
