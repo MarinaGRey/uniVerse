@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class BookActivity extends AppCompatActivity {
 
@@ -44,7 +46,7 @@ public class BookActivity extends AppCompatActivity {
         TextView review = findViewById(R.id.review);
         TextView category = findViewById(R.id.category_book_view);
         Button buy = findViewById(R.id.buyButton_book_view);
-        ImageView cover = findViewById(R.id.cover_book);
+        ImageView cover_place = findViewById(R.id.cover_book);
 
 
         // Retrieve intent extras
@@ -67,11 +69,10 @@ public class BookActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
 
                     if (document.exists()) {
-                        // Log.d(TAG, "HFGBETGBETHNGH: ");
                         // Extract data from the document
                         String review_text = document.getString("review");
                         String category_text = document.getString("category");
-                        String coverUrl = document.getString("cover");
+                        String coverUrl = document.getString("image_url");
 
                         // Populate views with book details
                         title.setText(title_text);
@@ -80,10 +81,11 @@ public class BookActivity extends AppCompatActivity {
                         review.setText(review_text);
                         category.setText(category_text);
 
-                        // Load cover image using Glide library
-                        Glide.with(this)
+                        // Load the image using Glide
+                        Glide.with(this /* context */)
                                 .load(coverUrl)
-                                .into(cover);
+                                .into(cover_place);
+
                     } else {
                         // Document does not exist
                     }
