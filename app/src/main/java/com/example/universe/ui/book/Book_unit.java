@@ -6,14 +6,15 @@ import java.util.Objects;
 public class Book_unit {
     private String title;
     private String author;
-    private String cover; // URL???, or image
+    private String cover;
     private String reviewer;
     private float rating;
     private boolean isBookmarked;
     private String postId;
+    private String userId;
 
 
-    public Book_unit(String title, String author, String cover, String reviewer, float rating, boolean isBookmarked, String postId) {
+    public Book_unit(String title, String author, String cover, String reviewer, float rating, boolean isBookmarked, String postId, String userId) {
         this.title = title;
         this.author = author;
         this.cover = cover;
@@ -21,6 +22,7 @@ public class Book_unit {
         this.rating = rating;
         this.isBookmarked = isBookmarked;
         this.postId = postId;
+        this.userId = userId;
 
     }
 
@@ -83,6 +85,14 @@ public class Book_unit {
 
     public void setPostId(String postId) {
         this.postId = postId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String postId) {
+        this.userId = userId;
     }
 
 

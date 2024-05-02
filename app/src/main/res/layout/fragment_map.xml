@@ -70,7 +70,6 @@
             android:layout_marginTop="376dp"
             android:ems="10"
             android:inputType="text"
-            android:text="@string/name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,7 +117,6 @@
             android:layout_marginTop="296dp"
             android:ems="10"
             android:inputType="text"
-            android:text="@string/name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

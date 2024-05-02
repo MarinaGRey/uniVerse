@@ -20,7 +20,7 @@ public class HomeFragment2 extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home2, container, false);
 
         // Find the ImageButtons in the fragment layout
-        ImageButton bookButton = rootView.findViewById(R.id.cover_book_view);
+        ImageButton bookButton = rootView.findViewById(R.id.cover_book);
         ImageButton bookmarkButton = rootView.findViewById(R.id.bookmark_button);
         final boolean[] isBookmarked = {false};
 

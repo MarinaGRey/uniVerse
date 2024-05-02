@@ -67,23 +67,19 @@ public class HomeFragment extends Fragment {
         bookAdapter = new BookAdapter(books,
                 // Handle item click, like navigating to BookActivity
                 book -> {
-            Intent intent = new Intent(getContext(), BookActivity.class);
-            intent.putExtra("postId", book.getPostId());
+                    Intent intent = new Intent(getContext(), BookActivity.class);
 
-            //intent.putExtra("book",book);
-            /*
-            // Pass additional data to the activity
-            intent.putExtra("title", book.getTitle());
-            intent.putExtra("author", book.getAuthor());
-            intent.putExtra("reviewer", book.getReviewer());
-            intent.putExtra("cover", book.getCover());
-            intent.putExtra("rating", book.getRating());
+                    // Pass additional data to the activity
+                    intent.putExtra("title", book.getTitle());
+                    intent.putExtra("author", book.getAuthor());
+                    intent.putExtra("reviewer", book.getReviewer());
+                    intent.putExtra("cover", book.getCover());
+                    intent.putExtra("rating", book.getRating());
+                    intent.putExtra("postId", book.getPostId());
+                    intent.putExtra("userId", book.getUserId());
 
-            */
-
-
-            getContext().startActivity(intent); // Start the new activity
-                    },
+                    getContext().startActivity(intent); // Start the new activity
+                },
 
                 book -> {
                     // Toggle bookmark state
@@ -152,10 +148,9 @@ public class HomeFragment extends Fragment {
                                                 Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
                                                 boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
                                                 String postId = postDoc.getId();
-                                                Log.d(TAG, "postId: " + postId);
+                                                String userId = userDoc.getId();
 
-
-                                                books.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId));
+                                                books.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId, userId));
                                                 Log.d(TAG, "books: " + books); // Log post ID
 
                                             }
@@ -169,8 +164,6 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 });
-
-
     }
 
 
