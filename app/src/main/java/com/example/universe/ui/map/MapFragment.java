@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
-
 import com.example.universe.R;
 
 public class MapFragment extends Fragment {
