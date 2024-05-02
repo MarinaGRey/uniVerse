@@ -3,12 +3,15 @@ package com.example.universe;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.universe.databinding.ActivityMainBinding;
 import com.example.universe.ui.home.HomeFragment;
+import com.example.universe.ui.map.LocationDist;
 import com.example.universe.ui.map.MapFragment;
 import com.example.universe.ui.profile.ProfileFragment;
 import com.example.universe.ui.search.SearchFragment;
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.map_button:
+                    Intent intent = new Intent(MainActivity.this,  LocationDist.class);
+                    startActivity(intent);
                     replaceFragment(new MapFragment());
                     return true;
 

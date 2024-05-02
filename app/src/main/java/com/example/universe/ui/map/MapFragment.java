@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.universe.R;
@@ -65,5 +64,4 @@ public class MapFragment extends Fragment {
 
         return rootView;
     }
-
 }
