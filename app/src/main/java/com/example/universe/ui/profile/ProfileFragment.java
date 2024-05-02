@@ -101,8 +101,15 @@ public class ProfileFragment extends Fragment {
                 // Handle item click, like navigating to BookActivity
                 book -> {
                     Intent intent = new Intent(getContext(), BookActivity.class);
-                    intent.putExtra("postId", book.getPostId());
 
+                    // Pass additional data to the activity
+                    intent.putExtra("title", book.getTitle());
+                    intent.putExtra("author", book.getAuthor());
+                    intent.putExtra("reviewer", book.getReviewer());
+                    intent.putExtra("cover", book.getCover());
+                    intent.putExtra("rating", book.getRating());
+                    intent.putExtra("postId", book.getPostId());
+                    intent.putExtra("userId", book.getUserId());
 
                     getContext().startActivity(intent); // Start the new activity
                 },
