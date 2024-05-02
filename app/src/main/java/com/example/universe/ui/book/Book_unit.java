@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Book_unit {
     private String title;
     private String author;
-    private String cover; // URL???, or image
+    private String cover;
     private String reviewer;
     private float rating;
     private boolean isBookmarked;

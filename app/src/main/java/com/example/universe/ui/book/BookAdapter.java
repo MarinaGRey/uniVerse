@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.universe.R;
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.Instant;
 import java.util.List;
@@ -25,6 +27,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     private final List<Book_unit> books; // List of Book_unit items
     private final OnItemClickListener listener; // Item click listener
     private final OnBookmarkClickListener bookmarkClickListener;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // Interface for item click handling
     public interface OnItemClickListener {
@@ -71,11 +75,26 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         //if (holder.ratingTextView != null) {
         //    holder.ratingTextView.setText(String.format("Rating: %.1f", book.getRating()));
         //}
+        String userId = book.getUserId();
+        String postId = book.getPostId();
+        DocumentReference postRef = db.collection("users").document(userId)
+                .collection("posts").document(postId);
 
-        // Use Glide or similar library to load the cover image
-        Glide.with(holder.itemView.getContext())
-                .load(book.getCover())
-                .into(holder.coverImageView);
+
+        postRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String imageUrl = documentSnapshot.getString("image_url");
+                // Use Glide or similar library to load the cover image
+                Glide.with(holder.itemView.getContext())
+                        .load(imageUrl)
+                        .into(holder.coverImageView);
+                Log.d(TAG, "cover_url: " + imageUrl);
+            } else {
+                Log.d(TAG, "Document does not exist");
+            }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Error fetching image URL: " + e.getMessage());
+        });
 
 
         // Set the bookmark state based on the data model
