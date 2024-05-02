@@ -73,6 +73,7 @@ public class BookActivity extends AppCompatActivity {
                         String review_text = document.getString("review");
                         String category_text = document.getString("category");
                         String coverUrl = document.getString("image_url");
+                        String buyUrl = document.getString("link");
 
                         // Populate views with book details
                         title.setText(title_text);
@@ -86,6 +87,12 @@ public class BookActivity extends AppCompatActivity {
                                 .load(coverUrl)
                                 .into(cover_place);
 
+                        // Set onClickListener for the buy button
+                        buy.setOnClickListener(view -> {
+                            // Open the buy URL in a web browser
+                            openUrlInBrowser(buyUrl);
+                        });
+
                     } else {
                         // Document does not exist
                     }
@@ -95,4 +102,14 @@ public class BookActivity extends AppCompatActivity {
             });
         }
     }
+    // Method to open a URL in a web browser
+    private void openUrlInBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
+
+
+    }
+
+
 }
