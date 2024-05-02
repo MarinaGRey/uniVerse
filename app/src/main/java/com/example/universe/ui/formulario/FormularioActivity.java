@@ -83,6 +83,7 @@ public class FormularioActivity extends Activity {
         categoriesList.add("Fantasy");
         categoriesList.add("Romance");
         categoriesList.add("Adventure");
+        categoriesList.add("Horror");
         categoriesList.add("Self-help");
         categoriesList.add("Essay");
         categoriesList.add("Comic/Graphic novel");

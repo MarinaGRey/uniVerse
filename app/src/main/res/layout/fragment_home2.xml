@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/cover_book_view"
+        android:id="@+id/cover_book"
         android:layout_width="168dp"
         android:layout_height="160dp"
         android:layout_marginStart="4dp"
