@@ -125,6 +125,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     // ViewHolder class for the RecyclerView
     public static class BookViewHolder extends RecyclerView.ViewHolder {
+
         TextView titleTextView;
         TextView authorTextView;
         TextView reviewerTextView;
@@ -135,7 +136,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            Log.d("BookAdapter", "BookViewHolder" );
             // Bind views from the item layout
             titleTextView = itemView.findViewById(R.id.book_title);
             authorTextView = itemView.findViewById(R.id.book_author);

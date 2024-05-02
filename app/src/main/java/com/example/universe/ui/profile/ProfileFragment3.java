@@ -11,38 +11,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.universe.R;
 import com.example.universe.ui.book.BookActivity;
 import com.example.universe.ui.book.BookAdapter;
 import com.example.universe.ui.book.BookCustomItemDecoration;
 import com.example.universe.ui.book.Book_unit;
-import com.example.universe.ui.formulario.FormularioActivity;
-import com.example.universe.ui.login.LoginActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-
-
-public class ProfileFragment extends Fragment {
+public class ProfileFragment3 extends Fragment {
     private RecyclerView recyclerView;
     private BookAdapter bookAdapter;
     private List<Book_unit> currentBookList = new ArrayList<>();
@@ -54,15 +41,6 @@ public class ProfileFragment extends Fragment {
     private String userId;
     Button yourPostsButton;
     Button savedButton;
-
-
-
-
-
-
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +61,7 @@ public class ProfileFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_view_profile);
 
         // Set the margins for the first item and other items
-        int firstItemMarginTop = 0; // Margin for the first item (adjust as needed)
+        int firstItemMarginTop = 800; // Margin for the first item (adjust as needed)
         int otherItemsMarginTop = 0; // Margin for other items (typically zero or minimal)
 
         // Add the custom ItemDecoration to the RecyclerView
@@ -92,7 +70,6 @@ public class ProfileFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        recyclerView.setVisibility(View.VISIBLE);
 
 
         Log.d(TAG, "Start bookAdapter");
@@ -101,15 +78,8 @@ public class ProfileFragment extends Fragment {
                 // Handle item click, like navigating to BookActivity
                 book -> {
                     Intent intent = new Intent(getContext(), BookActivity.class);
-
-                    // Pass additional data to the activity
-                    intent.putExtra("title", book.getTitle());
-                    intent.putExtra("author", book.getAuthor());
-                    intent.putExtra("reviewer", book.getReviewer());
-                    intent.putExtra("cover", book.getCover());
-                    intent.putExtra("rating", book.getRating());
                     intent.putExtra("postId", book.getPostId());
-                    intent.putExtra("userId", book.getUserId());
+
 
                     getContext().startActivity(intent); // Start the new activity
                 },
@@ -125,22 +95,6 @@ public class ProfileFragment extends Fragment {
 
 
         recyclerView.setAdapter(bookAdapter);
-
-
-
-
-
-
-        recyclerView.setOnTouchListener((v, event) -> {
-            Log.d("Debug", "RecyclerView received touch event"); // Check if the RecyclerView is intercepting
-            return false; // Allow touch events to propagate
-        });
-
-        ViewGroup parentView = (ViewGroup) recyclerView.getParent();
-        parentView.setOnTouchListener((v, event) -> {
-            Log.d("Debug", "Parent view received touch event"); // Check if the parent is intercepting
-            return false; // Ensure propagation
-        });
 
 
 
@@ -164,7 +118,7 @@ public class ProfileFragment extends Fragment {
 
         return rootView;
     }
-    /*
+
 
 
 
@@ -280,7 +234,7 @@ public class ProfileFragment extends Fragment {
                             String postId = postDoc.getId();
 
 
-                            savedPosts.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId,userId));
+                            savedPosts.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId, userId));
 
                         }
                         bookAdapter.notifyDataSetChanged(); // Notify adapter of data change

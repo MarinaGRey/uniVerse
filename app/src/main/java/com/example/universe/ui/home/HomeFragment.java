@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView = rootView.findViewById(R.id.recycler_view_books);
         // Set the margins for the first item and other items
-        int firstItemMarginTop = 300; // Margin for the first item (adjust as needed)
+        int firstItemMarginTop = 0; // Margin for the first item (adjust as needed)
         int otherItemsMarginTop = 0; // Margin for other items (typically zero or minimal)
 
         // Add the custom ItemDecoration to the RecyclerView
