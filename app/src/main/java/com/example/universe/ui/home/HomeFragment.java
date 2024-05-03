@@ -30,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class  HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private BookAdapter bookAdapter;
     private List<Book_unit> books = new ArrayList<>();
