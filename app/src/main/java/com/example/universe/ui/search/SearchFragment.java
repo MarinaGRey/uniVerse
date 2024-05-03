@@ -137,7 +137,6 @@ public class SearchFragment extends Fragment {
                     String userId = userDoc.getId();
                     // Query each user's "posts" subcollection
                     db.collection("users").document(userDoc.getId()).collection("posts")
-                            .whereEqualTo("title", query)
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
@@ -151,19 +150,24 @@ public class SearchFragment extends Fragment {
                                     Log.d(TAG, "Successfully fetched posts: " + postTask.getResult().size()); // Log number of posts
 
                                     for (DocumentSnapshot postDoc : postTask.getResult()) {
-                                        Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
                                         String title = postDoc.getString("title");
-                                        String author = postDoc.getString("author");
-                                        String cover = postDoc.getString("cover");
-                                        String reviewer = userDoc.getString("username");
-                                        Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
-                                        float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
-                                        Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
-                                        boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
-                                        String postId = postDoc.getId();
+                                        // Convert title to lowercase for case-insensitive search
+                                        String lowercaseTitle = title.toLowerCase();
+                                        // Check if the query matches the title or the lowercase title
+                                        if (lowercaseTitle.contains(query.toLowerCase())) {
+                                            Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
+                                            String author = postDoc.getString("author");
+                                            String cover = postDoc.getString("cover");
+                                            String reviewer = userDoc.getString("username");
+                                            Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
+                                            float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
+                                            Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
+                                            boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
+                                            String postId = postDoc.getId();
 
-                                        books.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId, userId));
-                                        Log.d(TAG, "books: " + books); // Log post ID
+                                            books.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId, userId));
+                                            Log.d(TAG, "books: " + books); // Log post ID
+                                        }
                                     }
 
                                     if (bookAdapter != null) {
@@ -175,6 +179,7 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
 
     private void searchBooksByCategory(String category) {
         // Perform search query in Firestore
