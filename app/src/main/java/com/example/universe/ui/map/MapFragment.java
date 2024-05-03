@@ -24,8 +24,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.LocationRestriction;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
@@ -120,6 +122,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void fetchNearbyPlaces() {
+        // Check if location permission is granted
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Request location permission if not granted
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+            return;
+        }
+
         // Define the fields you want to retrieve for each nearby place
         List<Field> placeFields = Arrays.asList(Field.NAME, Field.LAT_LNG);
 
@@ -141,6 +150,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             // Handle any errors that occur
         });
     }
+
+
 
 
 
