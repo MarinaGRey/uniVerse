@@ -57,6 +57,7 @@ public class SearchFragment extends Fragment {
                 if (!searchText.isEmpty()) {
                     // Perform search
                     searchBooks(searchText);
+                    searchEditText.setText("");
                 } else {
                     // Show error message or handle empty search query
                     searchBooksByCategory(spinner.getSelectedItem().toString());
