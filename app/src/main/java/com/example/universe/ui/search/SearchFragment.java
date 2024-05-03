@@ -59,7 +59,7 @@ public class SearchFragment extends Fragment {
                     searchBooks(searchText);
                 } else {
                     // Show error message or handle empty search query
-                    Toast.makeText(getContext(), "Please enter a search query", Toast.LENGTH_SHORT).show();
+                    searchBooksByCategory(spinner.getSelectedItem().toString());
                 }
             }
         });
@@ -174,4 +174,62 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
+    private void searchBooksByCategory(String category) {
+        // Perform search query in Firestore
+        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (!task.isSuccessful()) {
+                    // Handle error if the task failed
+                    Log.e(TAG, "Error fetching users", task.getException()); // Log errors
+                    return;
+                }
+                // Clear the existing list of books
+                books.clear();
+
+                // Iterate through all user documents
+                for (QueryDocumentSnapshot userDoc : task.getResult()) {
+                    String userId = userDoc.getId();
+                    // Query each user's "posts" subcollection
+                    db.collection("users").document(userDoc.getId()).collection("posts")
+                            .whereEqualTo("category", category.equals("All") ? "" : category)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> postTask) {
+                                    if (!postTask.isSuccessful()) {
+                                        // Handle error
+                                        Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
+                                        return;
+                                    }
+
+                                    Log.d(TAG, "Successfully fetched posts: " + postTask.getResult().size()); // Log number of posts
+
+                                    for (DocumentSnapshot postDoc : postTask.getResult()) {
+                                        Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
+                                        String title = postDoc.getString("title");
+                                        String author = postDoc.getString("author");
+                                        String cover = postDoc.getString("cover");
+                                        String reviewer = userDoc.getString("username");
+                                        Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
+                                        float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
+                                        Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
+                                        boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
+                                        String postId = postDoc.getId();
+
+                                        books.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId, userId));
+                                        Log.d(TAG, "books: " + books); // Log post ID
+                                    }
+
+                                    if (bookAdapter != null) {
+                                        bookAdapter.notifyDataSetChanged(); // Safely call notifyDataSetChanged()
+                                    }
+                                }
+                            });
+                }
+            }
+        });
+    }
+
 }
