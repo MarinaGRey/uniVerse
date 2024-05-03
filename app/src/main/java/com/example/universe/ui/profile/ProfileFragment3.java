@@ -28,7 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
 public class ProfileFragment3 extends Fragment {
     private RecyclerView recyclerView;
     private BookAdapter bookAdapter;
@@ -157,7 +157,7 @@ public class ProfileFragment3 extends Fragment {
 
 
 
-
+/*
 
     private void loadUserPosts() {
         userPosts.clear(); // Clear existing list to avoid duplicates
@@ -258,6 +258,7 @@ public class ProfileFragment3 extends Fragment {
 
 
 
+*/
 
 
 

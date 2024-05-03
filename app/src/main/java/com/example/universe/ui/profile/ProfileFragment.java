@@ -97,31 +97,7 @@ public class ProfileFragment extends Fragment {
 
         Log.d(TAG, "Start bookAdapter");
         // Define the adapter with a click listener that starts BookActivity
-        bookAdapter = new BookAdapter(currentBookList,
-                // Handle item click, like navigating to BookActivity
-                book -> {
-                    Intent intent = new Intent(getContext(), BookActivity.class);
-
-                    // Pass additional data to the activity
-                    intent.putExtra("title", book.getTitle());
-                    intent.putExtra("author", book.getAuthor());
-                    intent.putExtra("reviewer", book.getReviewer());
-                    intent.putExtra("cover", book.getCover());
-                    intent.putExtra("rating", book.getRating());
-                    intent.putExtra("postId", book.getPostId());
-                    intent.putExtra("userId", book.getUserId());
-
-                    getContext().startActivity(intent); // Start the new activity
-                },
-
-                book -> {
-                    // Toggle bookmark state
-                    book.setBookmarked(!book.isBookmarked()); // Toggle the state
-
-                    // persist the bookmark state to Firestore or Shared Preferences
-                    // update Firestore document to reflect the bookmark change
-                    bookAdapter.notifyDataSetChanged(); // Refresh the RecyclerView to reflect changes
-                });
+        bookAdapter = new BookAdapter(currentBookList,getContext());
 
 
         recyclerView.setAdapter(bookAdapter);
@@ -257,8 +233,84 @@ public class ProfileFragment extends Fragment {
                 });
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void loadSavedPosts() {
-        Log.d(TAG, "Start loadSavedPosts");
+        savedPosts.clear(); // Clear existing list to avoid duplicates
+        Log.d("ProfileFragment", "loadSavedPosts for user: " + userId); // Check userId
+
+        db.collection("users")
+                .document(userId)
+                .collection("bookmarks")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("ProfileFragment", "Successfully loadSavedPosts");
+                        if (task.getResult() != null) {
+
+
+                            for (DocumentSnapshot postDoc : task.getResult()) {
+                                // Create a Book_unit object and add it to savedPosts
+                                String title = postDoc.getString("title");
+                                String author = postDoc.getString("author");
+                                String cover = postDoc.getString("cover");
+                                String reviewer = postDoc.getString("reviewer");
+                                Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
+                                float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
+                                Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
+                                boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
+                                String postId = postDoc.getId();
+
+
+                                savedPosts.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId,userId));
+                                Log.d(TAG, "savedPosts: " + savedPosts);
+                            }
+
+                            currentBookList.clear();
+                            currentBookList.addAll(savedPosts);
+                            bookAdapter.notifyDataSetChanged();
+
+
+                        }
+                        else {
+                            Log.w("ProfileFragment", "No posts found");
+                        }
+
+
+
+
+
+
+
+                        //bookAdapter.notifyDataSetChanged(); // Notify adapter of data change
+                    }
+                });
+    }
+
+
+
+
+
+
+
+
+
+
+
+    private void loadSavedPosts2() {
+        Log.d("loadSavedPosts", "Start loadSavedPosts");
         savedPosts.clear(); // Clear existing list
 
         db.collection("users")

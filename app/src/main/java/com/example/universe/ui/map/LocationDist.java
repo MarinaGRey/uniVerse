@@ -29,7 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.Manifest;
 import android.location.Location;
 
-public class LocationDist extends AppCompatActivity implements OnMapReadyCallback {
+public class  LocationDist extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap map;
     private Location lastLocation;

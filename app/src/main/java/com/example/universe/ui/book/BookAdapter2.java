@@ -2,8 +2,6 @@ package com.example.universe.ui.book;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,41 +10,48 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.universe.R;
+
 import com.bumptech.glide.Glide;
+import com.example.universe.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.time.Instant;
 import java.util.List;
 
 //The BookAdapter class is designed to connect data to a RecyclerView, allowing it to display a list of book items efficiently.
 
+/*
 
-public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
+
+public class BookAdapter2 extends RecyclerView.Adapter<BookAdapter2.BookViewHolder> {
     private final List<Book_unit> books; // List of Book_unit items
-    //private final OnItemClickListener listener; // Item click listener
+    private final OnItemClickListener listener; // Item click listener
     //private final OnBookmarkClickListener bookmarkClickListener;
     private FirebaseAuth firebaseAuth;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private Context context;
+    // Interface for item click handling
+    public interface OnItemClickListener {
+        void onItemClick(Book_unit book); // Called when an item is clicked
+    }
 
 
+    // Interface for bookmark clicks
+    public interface OnBookmarkClickListener {
+        void onBookmarkClick(Book_unit book); // Method to handle bookmark clicks
+    }
 
 
     // Constructor to initialize the data and the click listener
-    public BookAdapter(List<Book_unit> books, Context context) {
+    public BookAdapter2(List<Book_unit> books, OnItemClickListener listener) {
         this.books = books;
-        this.context = context;
+        this.listener = listener;
         //this.bookmarkClickListener = bookmarkClickListener;
-        db = FirebaseFirestore.getInstance(); // Initialize Firestore
-        firebaseAuth = FirebaseAuth.getInstance(); // Initialize FirebaseAuth
     }
 
     @NonNull
@@ -100,125 +105,31 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 
 
+        // Set the bookmark state based on the data model
+        int bookmarkIcon = book.isBookmarked() ? R.drawable.guardar_instagram : R.drawable.marcador_de_forma_negra;
+        holder.bookmarkButton.setImageResource(bookmarkIcon);
+        Log.d(TAG, "bookmarkIcon: " + bookmarkIcon); // Log post ID
 
 
-
-        holder.itemView.setOnClickListener(v -> {
-            // Create an intent to open BookActivity
-            Intent intent = new Intent(context, BookActivity.class);
-
-            // Pass additional data
-            intent.putExtra("title", book.getTitle());
-            intent.putExtra("author", book.getAuthor());
-            intent.putExtra("reviewer", book.getReviewer());
-            intent.putExtra("cover", book.getCover());
-            intent.putExtra("rating", book.getRating());
-            intent.putExtra("postId", book.getPostId());
-            intent.putExtra("userId", book.getUserId());
-
-            context.startActivity(intent); // Start the new activity
-        });
-
-
-
-
-
-
-
-
-
-
-
-
+        // Handle bookmark button clicks
         holder.bookmarkButton.setOnClickListener(v -> {
-            // Toggle bookmark state
-            boolean newBookmarkedState = !book.isBookmarked();
-            book.setBookmarked(newBookmarkedState); // Update local data model
-
-            // Change the bookmark icon/image
-            if (newBookmarkedState) {
-                holder.bookmarkButton.setImageResource(R.drawable.guardar_instagram); // Example icon
-            } else {
-                holder.bookmarkButton.setImageResource(R.drawable.marcador_de_forma_negra); // Example icon
+            if (bookmarkClickListener != null) {
+                bookmarkClickListener.onBookmarkClick(book);
             }
 
-            // Save the new state to Firestore
-            saveBookmarkStatusToFirestore(book); // Save to Firebase
         });
 
-        // Set the initial bookmark icon based on the current state
-        if (book.isBookmarked()) {
-            holder.bookmarkButton.setImageResource(R.drawable.guardar_instagram);
-        } else {
-            holder.bookmarkButton.setImageResource(R.drawable.marcador_de_forma_negra);
-        }
 
 
 
-
-
-
-
-
-
-
-
-
-
+        // Handle item click event
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(book));
     }
-
-
-
-
-
-    private void saveBookmarkStatusToFirestore(Book_unit book) {
-        // Get the current user
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser == null) {
-            Log.e("BookAdapter", "User not logged in");
-            return; // Ensure user is logged in
-        }
-
-        String userId = currentUser.getUid(); // Get user ID
-
-
-        if (book.isBookmarked()) {
-            // Add to "bookmarks" collection
-            db.collection("users")
-                    .document(userId)
-                    .collection("bookmarks")
-                    .document(book.getPostId()) // Use the book's unique ID
-                    .set(book) // Save the book information
-                    .addOnSuccessListener(aVoid -> Log.d("BookAdapter", "Bookmark added" ))
-                    .addOnFailureListener(e -> Log.e("BookAdapter", "Failed to add bookmark", e));
-        } else {
-            // Remove from "bookmarks" collection
-            db.collection("users")
-                    .document(userId)
-                    .collection("bookmarks")
-                    .document(book.getPostId()) // Remove the document
-                    .delete()
-                    .addOnSuccessListener(aVoid -> Log.d("BookAdapter", "Bookmark removed"))
-                    .addOnFailureListener(e -> Log.e("BookAdapter", "Failed to remove bookmark", e));
-        }
-    }
-
-
-
-
-
 
     @Override
     public int getItemCount() {
         return books.size(); // Return the total number of books
     }
-
-
-
-
-
-
-
 
     // ViewHolder class for the RecyclerView
     public static class BookViewHolder extends RecyclerView.ViewHolder {
@@ -230,8 +141,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         ImageView coverImageView;
         ImageButton bookmarkButton;
-
-
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -246,3 +155,4 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         }
     }
 }
+*/

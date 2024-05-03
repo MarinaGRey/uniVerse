@@ -64,31 +64,7 @@ public class HomeFragment extends Fragment {
 
 
         // Define the adapter with a click listener that starts BookActivity
-        bookAdapter = new BookAdapter(books,
-                // Handle item click, like navigating to BookActivity
-                book -> {
-                    Intent intent = new Intent(getContext(), BookActivity.class);
-
-                    // Pass additional data to the activity
-                    intent.putExtra("title", book.getTitle());
-                    intent.putExtra("author", book.getAuthor());
-                    intent.putExtra("reviewer",     book.getReviewer());
-                    intent.putExtra("cover", book.getCover());
-                    intent.putExtra("rating", book.getRating());
-                    intent.putExtra("postId", book.getPostId());
-                    intent.putExtra("userId", book.getUserId());
-
-                    getContext().startActivity(intent); // Start the new activity
-                },
-
-                book -> {
-                    // Toggle bookmark state
-                    book.setBookmarked(!book.isBookmarked()); // Toggle the state
-
-                    // persist the bookmark state to Firestore or Shared Preferences
-                    // update Firestore document to reflect the bookmark change
-                    bookAdapter.notifyDataSetChanged(); // Refresh the RecyclerView to reflect changes
-                });
+        bookAdapter = new BookAdapter(books,getContext());
 
 
         recyclerView.setAdapter(bookAdapter);
