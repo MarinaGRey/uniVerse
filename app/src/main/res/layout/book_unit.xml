@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="6dp"
-    android:background="@color/white"
+    android:background="@drawable/rounded_background"
     android:layout_marginStart="60dp"
     android:layout_marginTop="20dp">
 
@@ -31,6 +31,7 @@
         android:layout_toEndOf="@+id/book_cover"
         android:text="@string/title"
         android:textColor="@color/marron_titulos"
+        android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +42,7 @@
         android:layout_toEndOf="@+id/book_cover"
         android:layout_below="@+id/book_title"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="@string/author"
 
         android:textColor="@color/marron_titulos"
@@ -54,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/book_rating"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/book_cover"
         android:text="Reviewer"
         android:textColor="@color/marron_titulos"
@@ -68,25 +69,30 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
 
+
+
     <RatingBar
         android:id="@+id/book_rating"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_below="@+id/book_author"
-        android:layout_toEndOf="@+id/book_cover"
-        android:backgroundTint="#2b9eb3"
-        android:progressTint="#fcab10"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="65dp"
+        android:numStars="5"
+        android:progressTint="@color/naranja_estrellas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:scaleX="0.5"
-        android:scaleY="0.5" />
+        android:scaleY="0.5"/>
+
 
 
     <ImageButton
         android:id="@+id/bookmark_button"
-        android:layout_width="43dp"
-        android:layout_height="46dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_below="@+id/book_rating"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/book_cover"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"

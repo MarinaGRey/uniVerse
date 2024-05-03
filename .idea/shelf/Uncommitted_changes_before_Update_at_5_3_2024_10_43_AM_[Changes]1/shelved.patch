@@ -1,0 +1,106 @@
+Index: app/src/main/res/layout/book_unit.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"300dp\"\r\n    android:layout_height=\"160dp\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:orientation=\"vertical\"\r\n    android:padding=\"6dp\"\r\n    android:background=\"@color/white\"\r\n    android:layout_marginStart=\"60dp\"\r\n    android:layout_marginTop=\"20dp\">\r\n\r\n\r\n\r\n    <ImageButton\r\n        android:id=\"@+id/book_cover\"\r\n        android:layout_width=\"120dp\"\r\n        android:layout_height=\"160dp\"\r\n        android:layout_marginEnd=\"10dp\"\r\n        android:backgroundTint=\"#00FFFFFF\"\r\n        android:scaleType=\"fitCenter\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:srcCompat=\"@drawable/portada_libro\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/book_title\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"1dp\"\r\n        android:layout_toEndOf=\"@+id/book_cover\"\r\n        android:text=\"@string/title\"\r\n        android:textColor=\"@color/marron_titulos\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/book_author\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_toEndOf=\"@+id/book_cover\"\r\n        android:layout_below=\"@+id/book_title\"\r\n        android:layout_marginStart=\"1dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:text=\"@string/author\"\r\n\r\n        android:textColor=\"@color/marron_titulos\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n\r\n    <TextView\r\n        android:id=\"@+id/book_reviewer\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@+id/book_rating\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:layout_toEndOf=\"@+id/book_cover\"\r\n        android:text=\"Reviewer\"\r\n        android:textColor=\"@color/marron_titulos\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <androidx.constraintlayout.widget.Guideline\r\n        android:id=\"@+id/guideline\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintGuide_begin=\"20dp\" />\r\n\r\n    <RatingBar\r\n        android:id=\"@+id/book_rating\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"40dp\"\r\n        android:layout_below=\"@+id/book_author\"\r\n        android:layout_toEndOf=\"@+id/book_cover\"\r\n        android:backgroundTint=\"#2b9eb3\"\r\n        android:progressTint=\"#fcab10\"\r\n        android:scaleX=\"0.5\"\r\n        android:scaleY=\"0.5\" />\r\n\r\n\r\n    <ImageButton\r\n        android:id=\"@+id/bookmark_button\"\r\n        android:layout_width=\"43dp\"\r\n        android:layout_height=\"46dp\"\r\n        android:layout_below=\"@+id/book_rating\"\r\n        android:layout_marginStart=\"90dp\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:layout_toEndOf=\"@+id/book_cover\"\r\n        android:backgroundTint=\"#00FFFFFF\"\r\n        android:scaleType=\"fitCenter\"\r\n        android:visibility=\"visible\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        app:srcCompat=\"@drawable/guardar_instagram\"\r\n        app:tint=\"@color/marron_titulos\"\r\n        tools:visibility=\"visible\" />\r\n\r\n\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/book_unit.xml b/app/src/main/res/layout/book_unit.xml
+--- a/app/src/main/res/layout/book_unit.xml	
++++ b/app/src/main/res/layout/book_unit.xml	
+@@ -6,7 +6,7 @@
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:orientation="vertical"
+     android:padding="6dp"
+-    android:background="@color/white"
++    android:background="@drawable/rounded_background"
+     android:layout_marginStart="60dp"
+     android:layout_marginTop="20dp">
+ 
+@@ -31,6 +31,7 @@
+         android:layout_toEndOf="@+id/book_cover"
+         android:text="@string/title"
+         android:textColor="@color/marron_titulos"
++        android:textSize="20dp"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+@@ -41,7 +42,7 @@
+         android:layout_toEndOf="@+id/book_cover"
+         android:layout_below="@+id/book_title"
+         android:layout_marginStart="1dp"
+-        android:layout_marginTop="10dp"
++        android:layout_marginTop="20dp"
+         android:text="@string/author"
+ 
+         android:textColor="@color/marron_titulos"
+@@ -54,7 +55,7 @@
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/book_rating"
+-        android:layout_marginTop="10dp"
++        android:layout_marginTop="0dp"
+         android:layout_toEndOf="@+id/book_cover"
+         android:text="Reviewer"
+         android:textColor="@color/marron_titulos"
+@@ -68,25 +69,30 @@
+         android:orientation="vertical"
+         app:layout_constraintGuide_begin="20dp" />
+ 
++
++
+     <RatingBar
+         android:id="@+id/book_rating"
+-        android:layout_width="match_parent"
+-        android:layout_height="40dp"
+-        android:layout_below="@+id/book_author"
+-        android:layout_toEndOf="@+id/book_cover"
+-        android:backgroundTint="#2b9eb3"
+-        android:progressTint="#fcab10"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="61dp"
++        android:layout_marginTop="65dp"
++        android:numStars="5"
++        android:progressTint="@color/naranja_estrellas"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
+         android:scaleX="0.5"
+-        android:scaleY="0.5" />
++        android:scaleY="0.5"/>
+ 
+ 
++
+     <ImageButton
+         android:id="@+id/bookmark_button"
+-        android:layout_width="43dp"
+-        android:layout_height="46dp"
++        android:layout_width="70dp"
++        android:layout_height="70dp"
+         android:layout_below="@+id/book_rating"
+-        android:layout_marginStart="90dp"
+-        android:layout_marginTop="10dp"
++        android:layout_marginStart="70dp"
++        android:layout_marginTop="0dp"
+         android:layout_toEndOf="@+id/book_cover"
+         android:backgroundTint="#00FFFFFF"
+         android:scaleType="fitCenter"
+Index: app/src/main/java/com/example/universe/ui/home/HomeFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.universe.ui.home;\r\n\r\nimport static androidx.constraintlayout.helper.widget.MotionEffect.TAG;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.view.LayoutInflater;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.example.universe.R;\r\nimport com.example.universe.ui.book.BookActivity;\r\nimport com.example.universe.ui.book.BookAdapter;\r\nimport com.example.universe.ui.book.BookCustomItemDecoration;\r\nimport com.example.universe.ui.book.Book_unit;\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.firebase.firestore.DocumentReference;\r\nimport com.google.firebase.firestore.DocumentSnapshot;\r\nimport com.google.firebase.firestore.FirebaseFirestore;\r\nimport com.google.firebase.firestore.QuerySnapshot;\r\nimport com.google.firebase.firestore.EventListener;\r\nimport com.google.firebase.firestore.FirebaseFirestoreException;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class HomeFragment extends Fragment {\r\n    private RecyclerView recyclerView;\r\n    private BookAdapter bookAdapter;\r\n    private List<Book_unit> books = new ArrayList<>();\r\n    private FirebaseFirestore db;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n\r\n        // Initialize Firebase Firestore\r\n        db = FirebaseFirestore.getInstance();\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        View rootView = inflater.inflate(R.layout.fragment_home, container, false);\r\n\r\n        recyclerView = rootView.findViewById(R.id.recycler_view_books);\r\n        // Set the margins for the first item and other items\r\n        int firstItemMarginTop = 0; // Margin for the first item (adjust as needed)\r\n        int otherItemsMarginTop = 0; // Margin for other items (typically zero or minimal)\r\n\r\n        // Add the custom ItemDecoration to the RecyclerView\r\n        recyclerView.addItemDecoration(new BookCustomItemDecoration(firstItemMarginTop, otherItemsMarginTop));\r\n\r\n\r\n\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));\r\n\r\n\r\n\r\n        // Define the adapter with a click listener that starts BookActivity\r\n        bookAdapter = new BookAdapter(books,\r\n                // Handle item click, like navigating to BookActivity\r\n                book -> {\r\n                    Intent intent = new Intent(getContext(), BookActivity.class);\r\n\r\n                    // Pass additional data to the activity\r\n                    intent.putExtra(\"title\", book.getTitle());\r\n                    intent.putExtra(\"author\", book.getAuthor());\r\n                    intent.putExtra(\"reviewer\", book.getReviewer());\r\n                    intent.putExtra(\"cover\", book.getCover());\r\n                    intent.putExtra(\"rating\", book.getRating());\r\n                    intent.putExtra(\"postId\", book.getPostId());\r\n                    intent.putExtra(\"userId\", book.getUserId());\r\n\r\n                    getContext().startActivity(intent); // Start the new activity\r\n                },\r\n\r\n                book -> {\r\n                    // Toggle bookmark state\r\n                    book.setBookmarked(!book.isBookmarked()); // Toggle the state\r\n\r\n                    // persist the bookmark state to Firestore or Shared Preferences\r\n                    // update Firestore document to reflect the bookmark change\r\n                    bookAdapter.notifyDataSetChanged(); // Refresh the RecyclerView to reflect changes\r\n                });\r\n\r\n\r\n        recyclerView.setAdapter(bookAdapter);\r\n\r\n        // Fetch data from Firestore\r\n        fetchAllUserPosts();\r\n\r\n\r\n        return rootView;\r\n    }\r\n\r\n    private void fetchAllUserPosts() {\r\n        // Step 1: Fetch all user documents from the \"users\" collection\r\n\r\n        Log.e(TAG, \"START fetchAllUserPosts \"); // Log errors\r\n        db.collection(\"users\") // Reference to the \"users\" collection\r\n                .get()\r\n                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<QuerySnapshot> task) {\r\n                        if (!task.isSuccessful()) {\r\n                            // Step 2: Handle error if the task failed\r\n                            Log.e(TAG, \"Error fetching users\", task.getException()); // Log errors\r\n                            return;\r\n                        }\r\n                        // Step 3: Clear the existing list of books\r\n                        books.clear();\r\n                        Log.d(TAG, \"Successfully fetched users: \" + task.getResult().size()); // Log number of users\r\n\r\n                        // Step 4: Iterate through all user documents\r\n                        for (DocumentSnapshot userDoc : task.getResult()) {\r\n                            String userId = userDoc.getId();\r\n                            Log.d(TAG, \"Fetching posts for user: \" + userDoc.getString(\"username\")+ \" id \" + userId); // Log user ID\r\n\r\n                            // Step 5: Query each user's \"posts\" subcollection\r\n                            db.collection(\"users\").document(userDoc.getId()).collection(\"posts\")\r\n                                    .get()\r\n                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {\r\n                                        @Override\r\n                                        public void onComplete(@NonNull Task<QuerySnapshot> postTask) {\r\n                                            if (!postTask.isSuccessful()) {\r\n                                                // Handle error\r\n                                                Log.e(TAG, \"Error fetching posts\", postTask.getException()); // Log errors\r\n                                                return;\r\n                                            }\r\n\r\n                                            Log.d(TAG, \"Successfully fetched posts: \" + postTask.getResult().size()); // Log number of posts\r\n\r\n                                            for (DocumentSnapshot postDoc : postTask.getResult()) {\r\n                                                Log.d(TAG, \"Processing post: \" + postDoc.getId()); // Log post ID\r\n                                                String title = postDoc.getString(\"title\");\r\n                                                String author = postDoc.getString(\"author\");\r\n                                                String cover = postDoc.getString(\"cover\");\r\n                                                String reviewer = userDoc.getString(\"username\");\r\n                                                Double ratingValue = postDoc.getDouble(\"rating\"); // Retrieve as Double\r\n                                                float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null\r\n                                                Boolean isBookmarkedValue = postDoc.getBoolean(\"isBookmarked\");\r\n                                                boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;\r\n                                                String postId = postDoc.getId();\r\n                                                String userId = userDoc.getId();\r\n\r\n                                                books.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId, userId));\r\n                                                Log.d(TAG, \"books: \" + books); // Log post ID\r\n\r\n                                            }\r\n\r\n                                            if (bookAdapter != null) {\r\n                                                bookAdapter.notifyDataSetChanged(); // Safely call notifyDataSetChanged()\r\n                                            }\r\n\r\n                                        }\r\n                                    });\r\n                        }\r\n                    }\r\n                });\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/universe/ui/home/HomeFragment.java b/app/src/main/java/com/example/universe/ui/home/HomeFragment.java
+--- a/app/src/main/java/com/example/universe/ui/home/HomeFragment.java	
++++ b/app/src/main/java/com/example/universe/ui/home/HomeFragment.java	
+@@ -72,7 +72,7 @@
+                     // Pass additional data to the activity
+                     intent.putExtra("title", book.getTitle());
+                     intent.putExtra("author", book.getAuthor());
+-                    intent.putExtra("reviewer", book.getReviewer());
++                    intent.putExtra("reviewer",     book.getReviewer());
+                     intent.putExtra("cover", book.getCover());
+                     intent.putExtra("rating", book.getRating());
+                     intent.putExtra("postId", book.getPostId());

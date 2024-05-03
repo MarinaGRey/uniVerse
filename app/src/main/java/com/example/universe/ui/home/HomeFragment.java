@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
                     // Pass additional data to the activity
                     intent.putExtra("title", book.getTitle());
                     intent.putExtra("author", book.getAuthor());
-                    intent.putExtra("reviewer", book.getReviewer());
+                    intent.putExtra("reviewer",     book.getReviewer());
                     intent.putExtra("cover", book.getCover());
                     intent.putExtra("rating", book.getRating());
                     intent.putExtra("postId", book.getPostId());

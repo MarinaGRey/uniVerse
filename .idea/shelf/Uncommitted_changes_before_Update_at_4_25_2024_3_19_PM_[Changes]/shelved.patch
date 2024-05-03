@@ -1,0 +1,101 @@
+Index: app/src/main/java/com/example/universe/ui/formulario/FormularioActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.universe.ui.formulario;\r\n\r\nimport android.app.Activity;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.RatingBar;\r\nimport android.widget.Spinner;\r\n\r\nimport com.example.universe.R;\r\nimport com.example.universe.ui.book.BookActivity;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class FormularioActivity extends Activity {\r\n\r\n    private static final int PICK_FILE_REQUEST = 2;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.formulario);\r\n\r\n        Button postButton = findViewById(R.id.post_button);\r\n\r\n        // Initialize Spinner\r\n        Spinner spinner = findViewById(R.id.categories);\r\n\r\n        // Define your list of categories\r\n        List<String> categoriesList = new ArrayList<>();\r\n        categoriesList.add(\"History\");\r\n        categoriesList.add(\"Thriller\");\r\n        categoriesList.add(\"Sci-Fi\");\r\n        categoriesList.add(\"Fantasy\");\r\n        categoriesList.add(\"Romance\");\r\n        categoriesList.add(\"Adventure\");\r\n        categoriesList.add(\"Self-help\");\r\n        categoriesList.add(\"Essay\");\r\n        categoriesList.add(\"Comic/Graphic novel\");\r\n        categoriesList.add(\"Manga\");\r\n        categoriesList.add(\"Children\");\r\n        categoriesList.add(\"Poetry\");\r\n        categoriesList.add(\"Cook-book\");\r\n        categoriesList.add(\"Travel\");\r\n        categoriesList.add(\"Other\");\r\n\r\n        // Create an ArrayAdapter using the string array and a default spinner layout\r\n        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoriesList);\r\n\r\n        // Specify the layout to use when the list of choices appears\r\n        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);\r\n\r\n        // Apply the adapter to the spinner\r\n        spinner.setAdapter(adapter);\r\n\r\n        postButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent(FormularioActivity.this, BookActivity.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n        Button insertImageButton = findViewById(R.id.insert_image_button); // Change to your button ID\r\n        insertImageButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                // Create an intent to pick a file from the device\r\n                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);\r\n                intent.setType(\"*/*\");\r\n\r\n                // Start the activity for result\r\n                startActivityForResult(Intent.createChooser(intent, \"Select File\"), PICK_FILE_REQUEST);\r\n            }\r\n        });\r\n    }\r\n\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, Intent data) {\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n\r\n        // Check if the request code is the same as what is passed here\r\n        if (requestCode == PICK_FILE_REQUEST) {\r\n            if (resultCode == RESULT_OK && data != null) {\r\n\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n    EditText title_write = findViewById(R.id.title_write);\r\n    final String title = title_write.getText().toString().trim();\r\n\r\n    EditText author_write = findViewById(R.id.author_write);\r\n    final String author = author_write.getText().toString().trim();\r\n\r\n    EditText review_write = findViewById(R.id.review_write);\r\n    final String review = review_write.getText().toString().trim();\r\n\r\n    EditText buy_link = findViewById(R.id.buy_link);\r\n    final String link = buy_link.getText().toString().trim();\r\n\r\n    Spinner categories = findViewById(R.id.categories);\r\n    final String category = categories.getSelectedItem().toString();\r\n\r\n    // Assuming you have a RatingBar named ratingBar in your layout XML file\r\n    RatingBar ratingBar = findViewById(R.id.ratingBar_formulario_view);\r\n\r\n    // Get the rating (number of stars)\r\n    float rating = ratingBar.getRating();\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/universe/ui/formulario/FormularioActivity.java b/app/src/main/java/com/example/universe/ui/formulario/FormularioActivity.java
+--- a/app/src/main/java/com/example/universe/ui/formulario/FormularioActivity.java	(revision 2ff107f73646cc8d000405d227e6b164cd3e7970)
++++ b/app/src/main/java/com/example/universe/ui/formulario/FormularioActivity.java	(date 1713530772978)
+@@ -9,9 +9,17 @@
+ import android.widget.EditText;
+ import android.widget.RatingBar;
+ import android.widget.Spinner;
++import android.widget.Toast;
++
++import androidx.annotation.NonNull;
+ 
+ import com.example.universe.R;
+ import com.example.universe.ui.book.BookActivity;
++import com.google.android.gms.tasks.OnFailureListener;
++import com.google.android.gms.tasks.OnSuccessListener;
++import com.google.firebase.auth.FirebaseAuth;
++import com.google.firebase.firestore.DocumentReference;
++import com.google.firebase.firestore.FirebaseFirestore;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+@@ -56,7 +64,7 @@
+ 
+         // Apply the adapter to the spinner
+         spinner.setAdapter(adapter);
+-
++        /*
+         postButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+@@ -64,6 +72,8 @@
+                 startActivity(intent);
+             }
+         });
++        */
++
+ 
+         Button insertImageButton = findViewById(R.id.insert_image_button); // Change to your button ID
+         insertImageButton.setOnClickListener(new View.OnClickListener() {
+@@ -114,12 +124,52 @@
+     float rating = ratingBar.getRating();
+ 
+ 
++
++    postButton.setOnClickListener(new View.OnClickListener() {
++        @Override
++        public void onClick(View v) {
++            // Get the values from the EditText fields, Spinner, and RatingBar
++            String title = title_write.getText().toString().trim();
++            String author = author_write.getText().toString().trim();
++            String review = review_write.getText().toString().trim();
++            String link = buy_link.getText().toString().trim();
++            String category = categories.getSelectedItem().toString();
++            float rating = ratingBar.getRating();
++
++            // Get the currently authenticated user's ID
++            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+ 
++            // Create a new post object with the obtained values
++            Post post = new Post(title, author, review, link, category, rating);
+ 
++            // Access Firebase Firestore instance
++            FirebaseFirestore db = FirebaseFirestore.getInstance();
+ 
++            // Reference to the user's document
++            DocumentReference userRef = db.collection("users").document(userId);
+ 
+-
+-
++            // Add the post to the "posts" subcollection within the user's document
++            userRef.collection("posts")
++                    .add(post)
++                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
++                        @Override
++                        public void onSuccess(DocumentReference documentReference) {
++                            // Post added successfully
++                            Toast.makeText(FormularioActivity.this, "Post added successfully!", Toast.LENGTH_SHORT).show();
++                            // Navigate to the BookActivity or any other activity if needed
++                            Intent intent = new Intent(FormularioActivity.this, BookActivity.class);
++                            startActivity(intent);
++                        }
++                    })
++                    .addOnFailureListener(new OnFailureListener() {
++                        @Override
++                        public void onFailure(@NonNull Exception e) {
++                            // Error adding post
++                            Toast.makeText(FormularioActivity.this, "Error adding post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
++                        }
++                    });
++        }
++    });
+ 
+ 
+ 
