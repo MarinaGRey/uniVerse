@@ -23,6 +23,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 
+import com.example.universe.Notifications;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,6 +131,8 @@ public class BookActivity extends AppCompatActivity {
                         });
 
                         // Set onClickListener for the add comment button
+                        // Set onClickListener for the add comment button
+                        // Set onClickListener for the add comment button
                         add_comment.setOnClickListener(view -> {
                             // Retrieve the comment text from the EditText
                             String commentText = comment.getText().toString().trim();
@@ -165,6 +169,9 @@ public class BookActivity extends AppCompatActivity {
 
                                                             // Clear the EditText after adding the comment
                                                             comment.setText("");
+
+                                                            // Trigger notification to post owner
+                                                            Notifications.statusBar(view, userId);
                                                         })
                                                         .addOnFailureListener(e -> {
                                                             // Failed to add comment
@@ -186,6 +193,8 @@ public class BookActivity extends AppCompatActivity {
                                 // Comment is empty, show a message or handle the case as needed
                             }
                         });
+
+
 
                     } else {
                         // Document does not exist
