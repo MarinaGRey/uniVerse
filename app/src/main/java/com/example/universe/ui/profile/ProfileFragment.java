@@ -55,7 +55,9 @@ public class ProfileFragment extends Fragment {
     Button yourPostsButton;
     Button savedButton;
 
-
+    Button addPostButton;
+    ImageButton logoutButton;
+    TextView usernameText;
 
 
 
@@ -75,10 +77,17 @@ public class ProfileFragment extends Fragment {
         userId = firebaseAuth.getCurrentUser().getUid();
         Log.d(TAG, "userId in profile: "+ userId);
 
+
+
+
+        // Find views in the fragment layout
         yourPostsButton = rootView.findViewById(R.id.your_posts_button);
         savedButton = rootView.findViewById(R.id.saved_button);
-        Log.d("Debug", "Button is enabled: " + yourPostsButton.isEnabled());
-        Log.d("Debug", "Button is visible: " + (yourPostsButton.getVisibility() == View.VISIBLE));
+        addPostButton = rootView.findViewById(R.id.add_post_button);
+        logoutButton = rootView.findViewById(R.id.logout_button);
+        usernameText = rootView.findViewById(R.id.username);
+
+
 
         recyclerView = rootView.findViewById(R.id.recycler_view_profile);
 
@@ -107,18 +116,58 @@ public class ProfileFragment extends Fragment {
 
 
 
-        recyclerView.setOnTouchListener((v, event) -> {
-            Log.d("Debug", "RecyclerView received touch event"); // Check if the RecyclerView is intercepting
-            return false; // Allow touch events to propagate
+
+
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            // Get the user document reference
+            db.collection("users").document(currentUser.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    // Retrieve the username from the document
+                                    String username = document.getString("username");
+                                    // Set the username to the TextView
+                                    usernameText.setText(username);
+                                }
+                            } else {
+                                // Handle failures
+                            }
+                        }
+                    });
+        }
+
+
+
+
+
+
+
+
+
+        // Set OnClickListener for addPostButton
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the FormularioActivity when addPostButton is clicked
+                Intent intent = new Intent(getActivity(), FormularioActivity.class);
+                startActivity(intent);
+            }
         });
 
-        ViewGroup parentView = (ViewGroup) recyclerView.getParent();
-        parentView.setOnTouchListener((v, event) -> {
-            Log.d("Debug", "Parent view received touch event"); // Check if the parent is intercepting
-            return false; // Ensure propagation
+        // Set OnClickListener for logoutButton
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the LoginActivity when logoutButton is clicked
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
         });
-
-
 
 
 
@@ -126,6 +175,10 @@ public class ProfileFragment extends Fragment {
         Log.d(TAG, "Start clicks");
 
         yourPostsButton.setOnClickListener(v -> {
+            int pressedColor = ContextCompat.getColor(v.getContext(), R.color.profile_seleccionado);
+            int notpressedColor = ContextCompat.getColor(v.getContext(), R.color.login_fondo_profile_sin_select);
+            yourPostsButton.setBackgroundColor(pressedColor);
+            savedButton.setBackgroundColor(notpressedColor);
             Log.d("Click", "Start clicks yourPostsButton");
             loadUserPosts();
         });
@@ -133,13 +186,24 @@ public class ProfileFragment extends Fragment {
 
 
         savedButton.setOnClickListener(v -> {
+            // Start the SavedActivity when savedButton is clicked
+            int pressedColor = ContextCompat.getColor(v.getContext(), R.color.profile_seleccionado);
+            int notpressedColor = ContextCompat.getColor(v.getContext(), R.color.login_fondo_profile_sin_select);
+            savedButton.setBackgroundColor(pressedColor);
+            yourPostsButton.setBackgroundColor(notpressedColor);
             Log.d("Click", "Start clicks savedButton");
             loadSavedPosts();;
         });
 
 
 
+
+
+
+
         return rootView;
+
+
     }
 
 
@@ -278,117 +342,6 @@ public class ProfileFragment extends Fragment {
                     }
                 });
     }
-
-
-
-
-
-
-
-
-
-/*
-        private void loadSavedPosts() {
-            savedPosts.clear(); // Clear the list to avoid duplicates
-            Log.d("ProfileFragment", "loadSavedPosts for user: " + userId); // Ensure userId is correct
-
-            // Get all bookmarked post IDs from the "bookmarks" collection
-            db.collection("users")
-                    .document(userId)
-                    .collection("bookmarks")
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Log.d("ProfileFragment", "Successfully retrieved bookmarks");
-                            if (task.getResult() != null) {
-                                List<DocumentSnapshot> bookmarks = task.getResult().getDocuments();
-
-                                // Now retrieve the actual posts from the "posts" collection based on the bookmarked post IDs
-                                for (DocumentSnapshot bookmark : bookmarks) {
-                                    String bookmarkedPostId = bookmark.getId(); // Get the bookmarked post ID
-
-                                    // Assume the author/user ID is stored in the bookmark
-                                    String authorUserId = bookmark.getString("userId"); // This might be how the bookmark links to the user
-
-                                    Log.d("ProfileFragment", "loadSavedPosts bookmarkedPostId: " + bookmarkedPostId + " authorUserId: "+ authorUserId);
-
-                                    // Now retrieve the corresponding post from the "posts" collection of the author
-                                    db.collection("users")
-                                            .document(authorUserId) // Correct user ID for the author
-                                            .collection("posts")
-                                            .document(bookmarkedPostId) // Use the correct post ID
-                                            .get()
-                                            .addOnSuccessListener(documentSnapshot -> {
-                                                if (documentSnapshot.exists()) {
-                                                    // Retrieve data from the post and add to savedPosts
-                                                    String title = documentSnapshot.getString("title");
-                                                    String author = documentSnapshot.getString("author");
-                                                    String cover = documentSnapshot.getString("cover");
-                                                    String reviewer = documentSnapshot.getString("reviewer");
-                                                    Double ratingValue = documentSnapshot.getDouble("rating");
-                                                    float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f;
-                                                    Boolean isBookmarkedValue = documentSnapshot.getBoolean("isBookmarked");
-                                                    boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
-
-                                                    // Create the Book_unit with the retrieved data
-                                                    Book_unit book = new Book_unit(title, author, cover, reviewer, rating, isBookmarked, bookmarkedPostId, authorUserId);
-                                                    savedPosts.add(book);
-
-                                                    Log.d("ProfileFragment", "Added saved post: " + book);
-                                                    Log.d("ProfileFragment", "bookmarkedPostIdt: " + bookmarkedPostId);
-                                                    Log.d("ProfileFragment", "savedPosts: " + savedPosts);
-                                                } else {
-                                                    Log.d("ProfileFragment", "Post not found for bookmarkedPostId: " + bookmarkedPostId+ "  authorUserId: "+authorUserId);
-                                                }
-                                            })
-                                            .addOnFailureListener(e -> {
-                                                Log.e("ProfileFragment", "Failed to retrieve post for bookmarkedPostId: " + bookmarkedPostId + "  authorUserId: "+authorUserId, e);
-                                            });
-                                }
-
-                                // After adding all saved posts, update the adapter
-                                Log.d("ProfileFragment", "update the adapter: " );
-                                currentBookList.clear();
-                                currentBookList.addAll(savedPosts);
-                                bookAdapter.notifyDataSetChanged();
-
-                                Log.d("ProfileFragment", "currentBookList: " +currentBookList );
-
-                            }
-                        } else {
-                            Log.e("ProfileFragment", "Failed to retrieve bookmarks", task.getException());
-                        }
-                    });
-
-
-
-
-
-
-
-
-        }
-
-
-
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

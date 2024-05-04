@@ -15,6 +15,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="76dp"
+        android:text="@string/username"
+        android:textColor="@color/marron_titulos"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/logout_button"
+        android:layout_width="59dp"
+        android:layout_height="116dp"
+        android:layout_marginStart="336dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#00FFFFFF"
+        android:rotationY="180"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logout"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="71dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="44dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile_user"
+        app:tint="@color/marron_titulos" />
+
     <!-- Your posts and saved buttons -->
     <Button
         android:id="@+id/your_posts_button"
