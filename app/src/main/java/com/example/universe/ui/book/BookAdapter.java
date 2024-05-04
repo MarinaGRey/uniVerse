@@ -163,7 +163,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 
 
-        holder.itemView.setOnClickListener(v -> {
+        View.OnClickListener itemClickListener = v -> {
             Log.e("BookAdapter", "Create intent to BookActivity");
             // Create an intent to open BookActivity
             Intent intent = new Intent(context, BookActivity.class);
@@ -178,8 +178,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             intent.putExtra("userId", book.getUserId());
 
             context.startActivity(intent); // Start the new activity
-        });
+        };
 
+
+        // Apply the click listener to the itemView
+        holder.itemView.setOnClickListener(itemClickListener);
+
+        // If you have an image view inside the item, apply the same click listener
+        holder.coverImageView.setOnClickListener(itemClickListener);
 
 
 
@@ -251,6 +257,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         ImageView coverImageView;
         ImageButton bookmarkButton;
+
 
 
 
