@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.universe.R;
 import com.example.universe.ui.book.BookAdapter;
 import com.example.universe.ui.book.Book_unit;
+import com.example.universe.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -48,7 +50,7 @@ public class SearchFragment extends Fragment {
         // Find the Spinner in the inflated layout
         Spinner spinner = rootView.findViewById(R.id.categories_search);
         EditText searchEditText = rootView.findViewById(R.id.search);
-        Button searchButton = rootView.findViewById(R.id.searchButton);
+        ImageButton searchButton = rootView.findViewById(R.id.searchButton);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +108,8 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         bookAdapter = new BookAdapter(books, getContext());
         recyclerView.setAdapter(bookAdapter);
+        HomeFragment.FirestoreUtils firestoreUtils = new HomeFragment.FirestoreUtils(db);
+        firestoreUtils.fetchAllUserPosts(books, bookAdapter);
 
         return rootView;
     }
@@ -144,6 +148,10 @@ public class SearchFragment extends Fragment {
                                     if (!postTask.isSuccessful()) {
                                         // Handle error
                                         Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
+                                        return;
+                                    }
+                                    if (postTask.getResult().size() == 0){
+                                        Toast.makeText(getContext(), "No books found", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
 
@@ -191,6 +199,7 @@ public class SearchFragment extends Fragment {
                     Log.e(TAG, "Error fetching users", task.getException()); // Log errors
                     return;
                 }
+
                 // Clear the existing list of books
                 books.clear();
 
@@ -207,6 +216,10 @@ public class SearchFragment extends Fragment {
                                     if (!postTask.isSuccessful()) {
                                         // Handle error
                                         Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
+                                        return;
+                                    }
+                                    if (postTask.getResult().size() == 0){
+                                        Toast.makeText(getContext(), "No books found", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
 

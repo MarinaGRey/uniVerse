@@ -70,83 +70,84 @@ public class  HomeFragment extends Fragment {
         recyclerView.setAdapter(bookAdapter);
 
         // Fetch data from Firestore
-        fetchAllUserPosts();
-
+        FirestoreUtils firestoreUtils = new FirestoreUtils(db);
+        firestoreUtils.fetchAllUserPosts(books, bookAdapter);
 
         return rootView;
     }
+    public static class FirestoreUtils {
+        private FirebaseFirestore db;
 
-    private void fetchAllUserPosts() {
-        // Step 1: Fetch all user documents from the "users" collection
+        public FirestoreUtils(FirebaseFirestore db) {
+            this.db = db;
+        }
 
-        Log.e(TAG, "START fetchAllUserPosts "); // Log errors
-        db.collection("users") // Reference to the "users" collection
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            // Step 2: Handle error if the task failed
-                            Log.e(TAG, "Error fetching users", task.getException()); // Log errors
-                            return;
+
+        public void fetchAllUserPosts(List<Book_unit> books, BookAdapter bookAdapter) {
+            // Step 1: Fetch all user documents from the "users" collection
+
+            Log.e(TAG, "START fetchAllUserPosts "); // Log errors
+            db.collection("users") // Reference to the "users" collection
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (!task.isSuccessful()) {
+                                // Step 2: Handle error if the task failed
+                                Log.e(TAG, "Error fetching users", task.getException()); // Log errors
+                                return;
+                            }
+                            // Step 3: Clear the existing list of books
+                            books.clear();
+                            Log.d(TAG, "Successfully fetched users: " + task.getResult().size()); // Log number of users
+
+                            // Step 4: Iterate through all user documents
+                            for (DocumentSnapshot userDoc : task.getResult()) {
+                                String userId = userDoc.getId();
+                                Log.d(TAG, "Fetching posts for user: " + userDoc.getString("username") + " id " + userId); // Log user ID
+
+                                // Step 5: Query each user's "posts" subcollection
+                                db.collection("users").document(userDoc.getId()).collection("posts")
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> postTask) {
+                                                if (!postTask.isSuccessful()) {
+                                                    // Handle error
+                                                    Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
+                                                    return;
+                                                }
+
+                                                Log.d(TAG, "Successfully fetched posts: " + postTask.getResult().size()); // Log number of posts
+
+                                                for (DocumentSnapshot postDoc : postTask.getResult()) {
+                                                    Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
+                                                    String title = postDoc.getString("title");
+                                                    String author = postDoc.getString("author");
+                                                    String cover = postDoc.getString("cover");
+                                                    String reviewer = userDoc.getString("username");
+                                                    Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
+                                                    float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
+                                                    Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
+                                                    boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
+                                                    String postId = postDoc.getId();
+                                                    String userId = userDoc.getId();
+
+                                                    books.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId, userId));
+                                                    Log.d(TAG, "books: " + books); // Log post ID
+
+                                                }
+
+                                                if (bookAdapter != null) {
+                                                    bookAdapter.notifyDataSetChanged(); // Safely call notifyDataSetChanged()
+                                                }
+
+                                            }
+                                        });
+                            }
                         }
-                        // Step 3: Clear the existing list of books
-                        books.clear();
-                        Log.d(TAG, "Successfully fetched users: " + task.getResult().size()); // Log number of users
-
-                        // Step 4: Iterate through all user documents
-                        for (DocumentSnapshot userDoc : task.getResult()) {
-                            String userId = userDoc.getId();
-                            Log.d(TAG, "Fetching posts for user: " + userDoc.getString("username")+ " id " + userId); // Log user ID
-
-                            // Step 5: Query each user's "posts" subcollection
-                            db.collection("users").document(userDoc.getId()).collection("posts")
-                                    .get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> postTask) {
-                                            if (!postTask.isSuccessful()) {
-                                                // Handle error
-                                                Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
-                                                return;
-                                            }
-
-                                            Log.d(TAG, "Successfully fetched posts: " + postTask.getResult().size()); // Log number of posts
-
-                                            for (DocumentSnapshot postDoc : postTask.getResult()) {
-                                                Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
-                                                String title = postDoc.getString("title");
-                                                String author = postDoc.getString("author");
-                                                String cover = postDoc.getString("cover");
-                                                String reviewer = userDoc.getString("username");
-                                                Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
-                                                float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
-                                                Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
-                                                boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
-                                                String postId = postDoc.getId();
-                                                String userId = userDoc.getId();
-
-                                                books.add(new Book_unit(title, author, cover, reviewer, rating,isBookmarked, postId, userId));
-                                                Log.d(TAG, "books: " + books); // Log post ID
-
-                                            }
-
-                                            if (bookAdapter != null) {
-                                                bookAdapter.notifyDataSetChanged(); // Safely call notifyDataSetChanged()
-                                            }
-
-                                        }
-                                    });
-                        }
-                    }
-                });
+                    });
+        }
     }
-
-
-
-
-
-
-
 
 }
