@@ -56,9 +56,12 @@ public class BookActivity extends AppCompatActivity {
         Button add_comment = findViewById(R.id.add_comment_button);
         LinearLayout comments_layout = findViewById(R.id.comment_layout);
 
+        Log.d("BookActivity", "Arrive to BookActivity!");
+
         // Retrieve intent extras
         Intent intent = getIntent();
         if (intent != null) {
+            Log.d("BookActivity", "Intent not null");
             String title_text = intent.getStringExtra("title");
             String author_text = intent.getStringExtra("author");
             String reviewer_name = intent.getStringExtra("reviewer");
@@ -68,6 +71,8 @@ public class BookActivity extends AppCompatActivity {
             DocumentReference postRef = db.collection("users").document(userId)
                     .collection("posts").document(postId);
 
+            Log.d("BookActivity", "postRef"+postRef);
+
             // Retrieve data from Firestore document
             postRef.get().addOnCompleteListener(task -> {
 
@@ -76,6 +81,7 @@ public class BookActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
 
                     if (document.exists()) {
+                        Log.d("BookActivity", "document exists");
                         // Extract data from the document
                         String review_text = document.getString("review");
                         String category_text = document.getString("category");

@@ -33,7 +33,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     //private final OnBookmarkClickListener bookmarkClickListener;
     private FirebaseAuth firebaseAuth;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db;
 
     private Context context;
 
@@ -63,6 +63,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         // Get the book at the specified position
         Book_unit book = books.get(position);
 
+        Log.d("BookAdapter", "onBindViewHolder book"+book);
+
         // Set the text fields
         holder.titleTextView.setText(book.getTitle());
         holder.authorTextView.setText(book.getAuthor());
@@ -75,10 +77,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         //if (holder.ratingTextView != null) {
         //    holder.ratingTextView.setText(String.format("Rating: %.1f", book.getRating()));
         //}
+
+        Log.d("BookAdapter", "onBindViewHolder book userId:  "+book.getUserId());
         String userId = book.getUserId();
         String postId = book.getPostId();
+        Log.d("BookAdapter", "userId: " + userId + ", postId: " + postId);
+
         DocumentReference postRef = db.collection("users").document(userId)
                 .collection("posts").document(postId);
+
+        Log.d("BookAdapter", "onBindViewHolder postRef  :  "+postRef);
 
 
         postRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -90,7 +98,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                         .into(holder.coverImageView);
                 Log.d(TAG, "cover_url: " + imageUrl);
             } else {
-                Log.d(TAG, "Document does not exist");
+                Log.d("BookAdapter", "Document does not exist");
             }
         }).addOnFailureListener(e -> {
             Log.e(TAG, "Error fetching image URL: " + e.getMessage());
@@ -104,6 +112,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 
         holder.itemView.setOnClickListener(v -> {
+            Log.e("BookAdapter", "Create intent to BookActivity");
             // Create an intent to open BookActivity
             Intent intent = new Intent(context, BookActivity.class);
 
