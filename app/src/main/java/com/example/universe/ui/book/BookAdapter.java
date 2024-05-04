@@ -34,6 +34,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     private FirebaseAuth firebaseAuth;
 
     private FirebaseFirestore db;
+    FirebaseUser currentUser;
+    String CurrentuserId;
 
     private Context context;
 
@@ -62,6 +64,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
         // Get the book at the specified position
         Book_unit book = books.get(position);
+        currentUser = firebaseAuth.getCurrentUser();
+        CurrentuserId = currentUser.getUid();
 
         Log.d("BookAdapter", "onBindViewHolder book"+book);
 
@@ -111,6 +115,54 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 
 
+
+        // Query to check if the book is bookmarked
+        DocumentReference bookmarkRef = db.collection("users")
+                .document(CurrentuserId)
+                .collection("bookmarks")
+                .document(book.getPostId());
+
+        bookmarkRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                // If the book is bookmarked, set the appropriate icon
+                holder.bookmarkButton.setImageResource(R.drawable.marcador_de_forma_negra);
+                book.setBookmarked(true); // Update local model
+            } else {
+                // If not bookmarked, set the other icon
+                holder.bookmarkButton.setImageResource(R.drawable.guardar_instagram);
+                book.setBookmarked(false); // Update local model
+            }
+        }).addOnFailureListener(e -> {
+            Log.e("BookAdapter", "Error checking bookmark status", e);
+        });
+
+
+
+
+
+
+
+        // Toggle bookmark state on button click
+        holder.bookmarkButton.setOnClickListener(v -> {
+            boolean newBookmarkedState = !book.isBookmarked(); // Toggle the bookmark state
+            book.setBookmarked(newBookmarkedState);
+
+            if (newBookmarkedState) {
+                holder.bookmarkButton.setImageResource(R.drawable.marcador_de_forma_negra); // Bookmarked
+                saveBookmarkStatusToFirestore(book); // Add to Firestore bookmarks
+            } else {
+                holder.bookmarkButton.setImageResource(R.drawable.guardar_instagram); // Not bookmarked
+                saveBookmarkStatusToFirestore(book); // Remove from Firestore bookmarks
+            }
+        });
+
+
+
+
+
+
+
+
         holder.itemView.setOnClickListener(v -> {
             Log.e("BookAdapter", "Create intent to BookActivity");
             // Create an intent to open BookActivity
@@ -136,44 +188,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 
 
-
-
-
-        holder.bookmarkButton.setOnClickListener(v -> {
-            // Toggle bookmark state
-            boolean newBookmarkedState = !book.isBookmarked();
-            book.setBookmarked(newBookmarkedState); // Update local data model
-
-            // Change the bookmark icon/image
-            if (newBookmarkedState) {
-                holder.bookmarkButton.setImageResource(R.drawable.guardar_instagram); // Example icon
-            } else {
-                holder.bookmarkButton.setImageResource(R.drawable.marcador_de_forma_negra); // Example icon
-            }
-
-            // Save the new state to Firestore
-            saveBookmarkStatusToFirestore(book); // Save to Firebase
-        });
-
-        // Set the initial bookmark icon based on the current state
-        if (book.isBookmarked()) {
-            holder.bookmarkButton.setImageResource(R.drawable.guardar_instagram);
-        } else {
-            holder.bookmarkButton.setImageResource(R.drawable.marcador_de_forma_negra);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -181,31 +195,29 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 
     private void saveBookmarkStatusToFirestore(Book_unit book) {
-        // Get the current user
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
         if (currentUser == null) {
             Log.e("BookAdapter", "User not logged in");
-            return; // Ensure user is logged in
+            return;
         }
 
         String userId = currentUser.getUid(); // Get user ID
-
 
         if (book.isBookmarked()) {
             // Add to "bookmarks" collection
             db.collection("users")
                     .document(userId)
                     .collection("bookmarks")
-                    .document(book.getPostId()) // Use the book's unique ID
-                    .set(book) // Save the book information
-                    .addOnSuccessListener(aVoid -> Log.d("BookAdapter", "Bookmark added" ))
+                    .document(book.getPostId())
+                    .set(book) // Save book info
+                    .addOnSuccessListener(aVoid -> Log.d("BookAdapter", "Bookmark added"))
                     .addOnFailureListener(e -> Log.e("BookAdapter", "Failed to add bookmark", e));
         } else {
             // Remove from "bookmarks" collection
             db.collection("users")
                     .document(userId)
                     .collection("bookmarks")
-                    .document(book.getPostId()) // Remove the document
+                    .document(book.getPostId()) // Use the book's unique ID
                     .delete()
                     .addOnSuccessListener(aVoid -> Log.d("BookAdapter", "Bookmark removed"))
                     .addOnFailureListener(e -> Log.e("BookAdapter", "Failed to remove bookmark", e));
