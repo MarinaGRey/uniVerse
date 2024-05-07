@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat;
 import com.example.universe.R;
 import com.example.universe.ui.book.BookActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -53,6 +55,7 @@ public class FormularioActivity extends Activity {
     private Spinner categories;
     private RatingBar ratingBar;
     private Uri selectedFileUri;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +161,7 @@ public class FormularioActivity extends Activity {
         String category = categories.getSelectedItem().toString();
         float rating = ratingBar.getRating();
 
+
         // Firebase Storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -169,6 +173,31 @@ public class FormularioActivity extends Activity {
 
         Log.d(TAG, "Selected file URI: " + imageRef);
         UploadTask uploadTask = imageRef.putFile(selectedFileUri);
+
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            // Get the user document reference
+            db.collection("users").document(currentUser.getUid())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                // Retrieve the username from the document
+                                username = document.getString("username");
+
+                            }
+                        } else {
+
+                        }
+                    });
+        }
+
+
+
 
         uploadTask.addOnSuccessListener(taskSnapshot -> {
             // Image uploaded successfully, get the download URL
@@ -182,6 +211,7 @@ public class FormularioActivity extends Activity {
                 post.put("category", category);
                 post.put("rating", rating);
                 post.put("image_url", downloadUri.toString()); // Save image URL
+                post.put("reviewer", username);
 
                 // Add the post document to the current user's "posts" subcollection
 
