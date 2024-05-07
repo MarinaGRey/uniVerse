@@ -22,10 +22,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.universe.R;
 import com.example.universe.ui.book.BookActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 
 
@@ -47,7 +43,6 @@ public class FormularioActivity extends Activity {
 
     // Firebase
     private FirebaseFirestore db;
-    private FirebaseAuth auth;
     private String userId;
 
     // Views
@@ -66,7 +61,7 @@ public class FormularioActivity extends Activity {
 
         // Initialize Firebase and Views
         db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         userId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
         title_write = findViewById(R.id.title_write);
         author_write = findViewById(R.id.author_write);
@@ -192,14 +187,11 @@ public class FormularioActivity extends Activity {
 
                 db.collection("users").document(userId).collection("posts")
                         .add(post)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                // Post added successfully
-                                Toast.makeText(FormularioActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
-                                // Proceed to BookActivity
-                                sendDataToBookActivity();
-                            }
+                        .addOnSuccessListener(documentReference -> {
+                            // Post added successfully
+                            Toast.makeText(FormularioActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
+                            // Proceed to BookActivity
+                            sendDataToBookActivity();
                         })
                         .addOnFailureListener(e -> {
                             // Handle errors

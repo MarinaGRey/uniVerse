@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,12 +21,9 @@ import com.example.universe.R;
 import com.example.universe.ui.book.BookAdapter;
 import com.example.universe.ui.book.Book_unit;
 import com.example.universe.ui.home.HomeFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +33,7 @@ public class SearchFragment extends Fragment {
     private FirebaseFirestore db;
     private BookAdapter bookAdapter;
 
-    private List<Book_unit> books = new ArrayList<>();
+    private final List<Book_unit> books = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,18 +47,15 @@ public class SearchFragment extends Fragment {
         EditText searchEditText = rootView.findViewById(R.id.search);
         ImageButton searchButton = rootView.findViewById(R.id.searchButton);
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String searchText = searchEditText.getText().toString().trim();
-                if (!searchText.isEmpty()) {
-                    // Perform search
-                    searchBooks(searchText);
-                    searchEditText.setText("");
-                } else {
-                    // Show error message or handle empty search query
-                    searchBooksByCategory(spinner.getSelectedItem().toString());
-                }
+        searchButton.setOnClickListener(v -> {
+            String searchText = searchEditText.getText().toString().trim();
+            if (!searchText.isEmpty()) {
+                // Perform search
+                searchBooks(searchText);
+                searchEditText.setText("");
+            } else {
+                // Show error message or handle empty search query
+                searchBooksByCategory(spinner.getSelectedItem().toString());
             }
         });
 
@@ -97,12 +89,7 @@ public class SearchFragment extends Fragment {
         spinner.setAdapter(adapter);
 
         // Set the prompt text programmatically
-        spinner.post(new Runnable() {
-            @Override
-            public void run() {
-                spinner.setPrompt("Select a category");
-            }
-        });
+        spinner.post(() -> spinner.setPrompt("Select a category"));
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recycler_search);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -125,65 +112,60 @@ public class SearchFragment extends Fragment {
 
     private void searchBooks(String query) {
         // Perform search query in Firestore
-        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (!task.isSuccessful()) {
-                    // Handle error if the task failed
-                    Log.e(TAG, "Error fetching users", task.getException()); // Log errors
-                    return;
-                }
-                // Clear the existing list of books
-                books.clear();
+        db.collection("users").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                // Handle error if the task failed
+                Log.e(TAG, "Error fetching users", task.getException()); // Log errors
+                return;
+            }
+            // Clear the existing list of books
+            books.clear();
 
-                // Iterate through all user documents
-                for (QueryDocumentSnapshot userDoc : task.getResult()) {
-                    String userId = userDoc.getId();
-                    // Query each user's "posts" subcollection
-                    db.collection("users").document(userDoc.getId()).collection("posts")
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> postTask) {
-                                    if (!postTask.isSuccessful()) {
-                                        // Handle error
-                                        Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
-                                        return;
-                                    }
-                                    if (postTask.getResult().size() == 0){
-                                        Toast.makeText(getContext(), "No books found", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
+            // Iterate through all user documents
+            for (QueryDocumentSnapshot userDoc : task.getResult()) {
+                String userId = userDoc.getId();
+                // Query each user's "posts" subcollection
+                db.collection("users").document(userDoc.getId()).collection("posts")
+                        .get()
+                        .addOnCompleteListener(postTask -> {
+                            if (!postTask.isSuccessful()) {
+                                // Handle error
+                                Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
+                                return;
+                            }
+                            if (postTask.getResult().size() == 0){
+                                Toast.makeText(getContext(), "No books found", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
-                                    Log.d(TAG, "Successfully fetched posts: " + postTask.getResult().size()); // Log number of posts
+                            Log.d(TAG, "Successfully fetched posts: " + postTask.getResult().size()); // Log number of posts
 
-                                    for (DocumentSnapshot postDoc : postTask.getResult()) {
-                                        String title = postDoc.getString("title");
-                                        // Convert title to lowercase for case-insensitive search
-                                        String lowercaseTitle = title.toLowerCase();
-                                        // Check if the query matches the title or the lowercase title
-                                        if (lowercaseTitle.contains(query.toLowerCase())) {
-                                            Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
-                                            String author = postDoc.getString("author");
-                                            String cover = postDoc.getString("cover");
-                                            String reviewer = userDoc.getString("username");
-                                            Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
-                                            float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
-                                            Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
-                                            boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
-                                            String postId = postDoc.getId();
+                            for (DocumentSnapshot postDoc : postTask.getResult()) {
+                                String title = postDoc.getString("title");
+                                // Convert title to lowercase for case-insensitive search
+                                assert title != null;
+                                String lowercaseTitle = title.toLowerCase();
+                                // Check if the query matches the title or the lowercase title
+                                if (lowercaseTitle.contains(query.toLowerCase())) {
+                                    Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
+                                    String author = postDoc.getString("author");
+                                    String cover = postDoc.getString("cover");
+                                    String reviewer = userDoc.getString("username");
+                                    Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
+                                    float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
+                                    Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
+                                    boolean isBookmarked = isBookmarkedValue != null && isBookmarkedValue;
+                                    String postId = postDoc.getId();
 
-                                            books.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId, userId));
-                                            Log.d(TAG, "books: " + books); // Log post ID
-                                        }
-                                    }
-
-                                    if (bookAdapter != null) {
-                                        bookAdapter.notifyDataSetChanged(); // Safely call notifyDataSetChanged()
-                                    }
+                                    books.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId, userId));
+                                    Log.d(TAG, "books: " + books); // Log post ID
                                 }
-                            });
-                }
+                            }
+
+                            if (bookAdapter != null) {
+                                bookAdapter.notifyDataSetChanged(); // Safely call notifyDataSetChanged()
+                            }
+                        });
             }
         });
     }
@@ -191,62 +173,56 @@ public class SearchFragment extends Fragment {
 
     private void searchBooksByCategory(String category) {
         // Perform search query in Firestore
-        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (!task.isSuccessful()) {
-                    // Handle error if the task failed
-                    Log.e(TAG, "Error fetching users", task.getException()); // Log errors
-                    return;
-                }
+        db.collection("users").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                // Handle error if the task failed
+                Log.e(TAG, "Error fetching users", task.getException()); // Log errors
+                return;
+            }
 
-                // Clear the existing list of books
-                books.clear();
+            // Clear the existing list of books
+            books.clear();
 
-                // Iterate through all user documents
-                for (QueryDocumentSnapshot userDoc : task.getResult()) {
-                    String userId = userDoc.getId();
-                    // Query each user's "posts" subcollection
-                    db.collection("users").document(userDoc.getId()).collection("posts")
-                            .whereEqualTo("category", category.equals("All") ? "" : category)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> postTask) {
-                                    if (!postTask.isSuccessful()) {
-                                        // Handle error
-                                        Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
-                                        return;
-                                    }
-                                    if (postTask.getResult().size() == 0){
-                                        Toast.makeText(getContext(), "No books found", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
+            // Iterate through all user documents
+            for (QueryDocumentSnapshot userDoc : task.getResult()) {
+                String userId = userDoc.getId();
+                // Query each user's "posts" subcollection
+                db.collection("users").document(userDoc.getId()).collection("posts")
+                        .whereEqualTo("category", category.equals("All") ? "" : category)
+                        .get()
+                        .addOnCompleteListener(postTask -> {
+                            if (!postTask.isSuccessful()) {
+                                // Handle error
+                                Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
+                                return;
+                            }
+                            if (postTask.getResult().size() == 0){
+                                Toast.makeText(getContext(), "No books found", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
 
-                                    Log.d(TAG, "Successfully fetched posts: " + postTask.getResult().size()); // Log number of posts
+                            Log.d(TAG, "Successfully fetched posts: " + postTask.getResult().size()); // Log number of posts
 
-                                    for (DocumentSnapshot postDoc : postTask.getResult()) {
-                                        Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
-                                        String title = postDoc.getString("title");
-                                        String author = postDoc.getString("author");
-                                        String cover = postDoc.getString("cover");
-                                        String reviewer = userDoc.getString("username");
-                                        Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
-                                        float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
-                                        Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
-                                        boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
-                                        String postId = postDoc.getId();
+                            for (DocumentSnapshot postDoc : postTask.getResult()) {
+                                Log.d(TAG, "Processing post: " + postDoc.getId()); // Log post ID
+                                String title = postDoc.getString("title");
+                                String author = postDoc.getString("author");
+                                String cover = postDoc.getString("cover");
+                                String reviewer = userDoc.getString("username");
+                                Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
+                                float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
+                                Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
+                                boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue : false;
+                                String postId = postDoc.getId();
 
-                                        books.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId, userId));
-                                        Log.d(TAG, "books: " + books); // Log post ID
-                                    }
+                                books.add(new Book_unit(title, author, cover, reviewer, rating, isBookmarked, postId, userId));
+                                Log.d(TAG, "books: " + books); // Log post ID
+                            }
 
-                                    if (bookAdapter != null) {
-                                        bookAdapter.notifyDataSetChanged(); // Safely call notifyDataSetChanged()
-                                    }
-                                }
-                            });
-                }
+                            if (bookAdapter != null) {
+                                bookAdapter.notifyDataSetChanged(); // Safely call notifyDataSetChanged()
+                            }
+                        });
             }
         });
     }

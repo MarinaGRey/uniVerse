@@ -6,12 +6,12 @@ import java.util.Objects;
 public class Book_unit {
     private String title;
     private String author;
-    private String cover;
-    private String reviewer;
-    private float rating;
+    private final String cover;
+    private final String reviewer;
+    private final float rating;
     private boolean isBookmarked;
-    private String postId;
-    private String userId;
+    private final String postId;
+    private final String userId;
 
 
     public Book_unit(String title, String author, String cover, String reviewer, float rating, boolean isBookmarked, String postId, String userId) {
@@ -47,24 +47,12 @@ public class Book_unit {
         return cover;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
     public String getReviewer() {
         return reviewer;
     }
 
-    public void setReviewer(String reviewer) {
-        this.reviewer = reviewer;
-    }
-
     public float getRating() {
         return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
     }
 
 
@@ -83,16 +71,8 @@ public class Book_unit {
         return postId;
     }
 
-    public void setPostId(String postId) {
-        this.postId = postId;
-    }
-
     public String getUserId() {
         return userId;
-    }
-
-    public void setUserId(String postId) {
-        this.userId = userId;
     }
 
 

@@ -13,44 +13,32 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import com.example.universe.R;
-import com.example.universe.ui.book.BookActivity;
 import com.example.universe.ui.book.BookAdapter;
 import com.example.universe.ui.book.BookCustomItemDecoration;
 import com.example.universe.ui.book.Book_unit;
 import com.example.universe.ui.formulario.FormularioActivity;
 import com.example.universe.ui.login.LoginActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
-
-
+import java.util.Objects;
 
 
 public class ProfileFragment extends Fragment {
-    private RecyclerView recyclerView;
     private BookAdapter bookAdapter;
-    private List<Book_unit> currentBookList = new ArrayList<>();
+    private final List<Book_unit> currentBookList = new ArrayList<>();
 
-    private List<Book_unit> userPosts = new ArrayList<>();
-    private List<Book_unit> savedPosts = new ArrayList<>();
+    private final List<Book_unit> userPosts = new ArrayList<>();
+    private final List<Book_unit> savedPosts = new ArrayList<>();
     private FirebaseFirestore db;
-    private FirebaseAuth firebaseAuth;
     private String userId;
     Button yourPostsButton;
     Button savedButton;
@@ -68,8 +56,8 @@ public class ProfileFragment extends Fragment {
 
 
         db = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        userId = firebaseAuth.getCurrentUser().getUid();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
         Log.d(TAG, "userId in profile: "+ userId);
 
 
@@ -83,8 +71,7 @@ public class ProfileFragment extends Fragment {
         usernameText = rootView.findViewById(R.id.username);
 
 
-
-        recyclerView = rootView.findViewById(R.id.recycler_view_profile);
+        RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view_profile);
 
         // Set the margins for the first item and other items
         int firstItemMarginTop = 0; // Margin for the first item (adjust as needed)
@@ -118,20 +105,17 @@ public class ProfileFragment extends Fragment {
             // Get the user document reference
             db.collection("users").document(currentUser.getUid())
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()) {
-                                    // Retrieve the username from the document
-                                    String username = document.getString("username");
-                                    // Set the username to the TextView
-                                    usernameText.setText(username);
-                                }
-                            } else {
-                                // Handle failures
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                // Retrieve the username from the document
+                                String username = document.getString("username");
+                                // Set the username to the TextView
+                                usernameText.setText(username);
                             }
+                        } else {
+                            // Handle failures
                         }
                     });
         }
@@ -145,23 +129,17 @@ public class ProfileFragment extends Fragment {
 
 
         // Set OnClickListener for addPostButton
-        addPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Start the FormularioActivity when addPostButton is clicked
-                Intent intent = new Intent(getActivity(), FormularioActivity.class);
-                startActivity(intent);
-            }
+        addPostButton.setOnClickListener(v -> {
+            // Start the FormularioActivity when addPostButton is clicked
+            Intent intent = new Intent(getActivity(), FormularioActivity.class);
+            startActivity(intent);
         });
 
         // Set OnClickListener for logoutButton
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Start the LoginActivity when logoutButton is clicked
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
+        logoutButton.setOnClickListener(v -> {
+            // Start the LoginActivity when logoutButton is clicked
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
         });
 
 
@@ -187,7 +165,7 @@ public class ProfileFragment extends Fragment {
             savedButton.setBackgroundColor(pressedColor);
             yourPostsButton.setBackgroundColor(notpressedColor);
             Log.d("Click", "Start clicks savedButton");
-            loadSavedPosts();;
+            loadSavedPosts();
         });
 
 
@@ -229,7 +207,7 @@ public class ProfileFragment extends Fragment {
                                 Double ratingValue = postDoc.getDouble("rating"); // Retrieve as Double
                                 float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f; // Convert to float with a default value if null
                                 Boolean isBookmarkedValue = postDoc.getBoolean("isBookmarked");
-                                boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
+                                boolean isBookmarked = isBookmarkedValue != null && isBookmarkedValue;
                                 String postId = postDoc.getId();
 
 
@@ -286,6 +264,7 @@ public class ProfileFragment extends Fragment {
                             String bookmarkedPostId = bookmark.getId(); // Get the bookmarked post ID
                             String authorUserId = bookmark.getString("userId");
 
+                            assert authorUserId != null;
                             db.collection("users")
                                     .document(authorUserId)
                                     .collection("posts")
@@ -301,7 +280,7 @@ public class ProfileFragment extends Fragment {
                                             Double ratingValue = documentSnapshot.getDouble("rating");
                                             float rating = (ratingValue != null) ? ratingValue.floatValue() : 0.0f;
                                             Boolean isBookmarkedValue = documentSnapshot.getBoolean("isBookmarked");
-                                            boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue.booleanValue() : false;
+                                            boolean isBookmarked = (isBookmarkedValue != null) ? isBookmarkedValue : false;
 
                                             Book_unit book = new Book_unit(title, author, cover, reviewer, rating, isBookmarked, bookmarkedPostId, authorUserId);
                                             savedPosts.add(book); // Add to savedPosts

@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.time.Instant;
 import java.util.List;
 
 //The BookAdapter class is designed to connect data to a RecyclerView, allowing it to display a list of book items efficiently.
@@ -29,15 +28,13 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
     private final List<Book_unit> books; // List of Book_unit items
-    //private final OnItemClickListener listener; // Item click listener
-    //private final OnBookmarkClickListener bookmarkClickListener;
-    private FirebaseAuth firebaseAuth;
+    private final FirebaseAuth firebaseAuth;
 
-    private FirebaseFirestore db;
+    private final FirebaseFirestore db;
     FirebaseUser currentUser;
     String CurrentuserId;
 
-    private Context context;
+    private final Context context;
 
 
 
@@ -65,6 +62,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         // Get the book at the specified position
         Book_unit book = books.get(position);
         currentUser = firebaseAuth.getCurrentUser();
+        assert currentUser != null;
         CurrentuserId = currentUser.getUid();
 
         Log.d("BookAdapter", "onBindViewHolder book"+book);
@@ -75,12 +73,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.reviewerTextView.setText("@" + book.getReviewer());
         // Set the rating value for the RatingBar
         holder.ratingBar.setRating(book.getRating()); // Use setRating for RatingBar
-
-
-        // Set the rating if a rating bar exists in the layout
-        //if (holder.ratingTextView != null) {
-        //    holder.ratingTextView.setText(String.format("Rating: %.1f", book.getRating()));
-        //}
 
         Log.d("BookAdapter", "onBindViewHolder book userId:  "+book.getUserId());
         String userId = book.getUserId();
@@ -104,9 +96,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             } else {
                 Log.d("BookAdapter", "Document does not exist");
             }
-        }).addOnFailureListener(e -> {
-            Log.e(TAG, "Error fetching image URL: " + e.getMessage());
-        });
+        }).addOnFailureListener(e -> Log.e(TAG, "Error fetching image URL: " + e.getMessage()));
 
 
 
@@ -132,9 +122,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 holder.bookmarkButton.setImageResource(R.drawable.guardar_instagram);
                 book.setBookmarked(false); // Update local model
             }
-        }).addOnFailureListener(e -> {
-            Log.e("BookAdapter", "Error checking bookmark status", e);
-        });
+        }).addOnFailureListener(e -> Log.e("BookAdapter", "Error checking bookmark status", e));
 
 
 

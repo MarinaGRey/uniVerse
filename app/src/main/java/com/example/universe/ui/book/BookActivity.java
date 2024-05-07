@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,21 +22,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 
 import com.example.universe.Notifications;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class BookActivity extends AppCompatActivity {
 
     // Firebase
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    // Views
-    private EditText title_write;
-    private TextView user_name_book_view;
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -70,6 +67,8 @@ public class BookActivity extends AppCompatActivity {
             String postId = intent.getStringExtra("postId");
             String userId = intent.getStringExtra("userId");
 
+            assert userId != null;
+            assert postId != null;
             DocumentReference postRef = db.collection("users").document(userId)
                     .collection("posts").document(postId);
 
@@ -140,7 +139,7 @@ public class BookActivity extends AppCompatActivity {
                             // Check if the comment is not empty
                             if (!commentText.isEmpty()) {
                                 // Get the current user ID from Firebase Authentication
-                                String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                String currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
                                 // Create a new document reference for the comment
                                 DocumentReference commentRef = postRef.collection("comments").document();
@@ -190,17 +189,15 @@ public class BookActivity extends AppCompatActivity {
                                             // Handle the error
                                         });
                             } else {
-                                // Comment is empty, show a message or handle the case as needed
+                                Toast.makeText(BookActivity.this, "Comment is empty", Toast.LENGTH_SHORT).show();
                             }
                         });
 
-
-
                     } else {
-                        // Document does not exist
+                        Toast.makeText(BookActivity.this, "Document does not exist", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // Task failed with an exception
+                    Toast.makeText(BookActivity.this, "An error has occurred", Toast.LENGTH_SHORT).show();
                 }
             });
         }

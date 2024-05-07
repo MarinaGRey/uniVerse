@@ -2,20 +2,16 @@ package com.example.universe.ui.map;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-
 import com.example.universe.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -24,21 +20,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.LocationRestriction;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
-
 import java.util.Arrays;
 import java.util.List;
-
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.Place.Field;
 
 
@@ -49,7 +38,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationClient;
     private PlacesClient placesClient;
     private final static int LOCATION_REQUEST_CODE = 1;
-    public static int PLACE_ID = 3; // Define the value according to the Places API documentation
 
 
     @Override
@@ -57,10 +45,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
-        ImageButton addLocationButton = rootView.findViewById(R.id.add_location_button);
-        FrameLayout mapModalLayout = rootView.findViewById(R.id.modal_layout);
-
-        mapModalLayout.setVisibility(View.GONE);
 
         // Initialize FusedLocationProviderClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
@@ -81,11 +65,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-
-        // OnClickListener for addLocationButton
-        addLocationButton.setOnClickListener(v -> {
-            // Your logic for adding location
-        });
 
         return rootView;
     }
@@ -143,6 +122,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 if (placeTypes != null && (placeTypes.contains(Place.Type.LIBRARY) || placeTypes.contains(Place.Type.BOOK_STORE))) {
                     // Add markers for libraries and bookshops
                     LatLng placeLatLng = place.getLatLng();
+                    assert placeLatLng != null;
                     map.addMarker(new MarkerOptions().position(placeLatLng).title(place.getName()));
                 }
             }
@@ -150,12 +130,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             // Handle any errors that occur
         });
     }
-
-
-
-
-
-
-
 
 }
