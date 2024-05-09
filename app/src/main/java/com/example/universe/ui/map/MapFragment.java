@@ -106,7 +106,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             return;
         }
 
-        // Define the fields you want to retrieve for each nearby place
+        // Define the fields to retrieve for each nearby place
         List<Field> placeFields = Arrays.asList(Field.NAME, Field.LAT_LNG);
 
         // Use the Places SDK to create a FindCurrentPlaceRequest

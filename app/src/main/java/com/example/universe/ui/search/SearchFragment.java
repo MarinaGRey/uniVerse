@@ -103,8 +103,6 @@ public class SearchFragment extends Fragment {
 
     private void populateSpinner(Spinner spinner) {
         List<String> categoriesList = new ArrayList<>();
-        // Add categories to the list
-        // (You can use your existing code here)
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoriesList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -131,10 +129,6 @@ public class SearchFragment extends Fragment {
                             if (!postTask.isSuccessful()) {
                                 // Handle error
                                 Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
-                                return;
-                            }
-                            if (postTask.getResult().size() == 0){
-                                Toast.makeText(getContext(), "No books found", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
@@ -194,10 +188,6 @@ public class SearchFragment extends Fragment {
                             if (!postTask.isSuccessful()) {
                                 // Handle error
                                 Log.e(TAG, "Error fetching posts", postTask.getException()); // Log errors
-                                return;
-                            }
-                            if (postTask.getResult().size() == 0){
-                                Toast.makeText(getContext(), "No books found", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
