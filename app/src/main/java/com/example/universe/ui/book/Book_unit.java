@@ -77,7 +77,7 @@ public class Book_unit {
 
 
 
-    // ?????  Override equals and hashCode for correct behavior in hash-based collections
+    // Override equals and hashCode for correct behavior in hash-based collections
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

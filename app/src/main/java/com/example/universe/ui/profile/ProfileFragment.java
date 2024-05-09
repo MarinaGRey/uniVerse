@@ -4,6 +4,7 @@ package com.example.universe.ui.profile;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,7 @@ import com.example.universe.R;
 import com.example.universe.ui.book.BookAdapter;
 import com.example.universe.ui.book.BookCustomItemDecoration;
 import com.example.universe.ui.book.Book_unit;
-import com.example.universe.ui.formulario.FormularioActivity;
+import com.example.universe.ui.formulario.FormActivity;
 import com.example.universe.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -115,7 +116,7 @@ public class ProfileFragment extends Fragment {
                                 usernameText.setText(username);
                             }
                         } else {
-                            // Handle failures
+                            Log.d(ContentValues.TAG, "User does not exist");
                         }
                     });
         }
@@ -131,7 +132,7 @@ public class ProfileFragment extends Fragment {
         // Set OnClickListener for addPostButton
         addPostButton.setOnClickListener(v -> {
             // Start the FormularioActivity when addPostButton is clicked
-            Intent intent = new Intent(getActivity(), FormularioActivity.class);
+            Intent intent = new Intent(getActivity(), FormActivity.class);
             startActivity(intent);
         });
 

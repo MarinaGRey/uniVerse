@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.universe.ui.formulario.FormularioActivity"/>
+        <activity android:name="com.example.universe.ui.formulario.FormActivity"/>
         <activity android:name="com.example.universe.ui.book.BookActivity"/>
         <activity android:name="com.example.universe.MainActivity"/>
         <meta-data

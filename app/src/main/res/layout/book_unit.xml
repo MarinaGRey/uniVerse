@@ -57,7 +57,7 @@
         android:layout_below="@+id/book_rating"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/book_cover"
-        android:text="Reviewer"
+        android:text="@string/reviewer"
         android:textColor="@color/marron_titulos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

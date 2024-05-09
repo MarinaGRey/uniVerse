@@ -27,7 +27,7 @@
         android:layout_marginStart="220dp"
         android:layout_marginTop="596dp"
         android:backgroundTint="@color/marron_titulos"
-        android:text="Sign-up"
+        android:text="@string/sign_up"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

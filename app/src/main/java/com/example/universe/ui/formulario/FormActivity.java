@@ -38,7 +38,7 @@ import java.util.Objects;
 
 
 
-public class FormularioActivity extends Activity {
+public class FormActivity extends Activity {
 
     private static final int PICK_FILE_REQUEST = 2;
     private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 1001;
@@ -115,11 +115,11 @@ public class FormularioActivity extends Activity {
             startActivityForResult(Intent.createChooser(intent, "Select File"), PICK_FILE_REQUEST);
         });
 
-        // Verificar si el permiso ya está concedido
+        // VVerify if the permission is granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            // El permiso ya está concedido, puedes proceder con la lógica de tu actividad
+            Log.d(TAG, "Permission was already granted");
         } else {
-            // El permiso no está concedido, solicitarlo al usuario
+            // The permission is not granted, ask for it
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_REQUEST_CODE);
         }
 
@@ -132,9 +132,9 @@ public class FormularioActivity extends Activity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == READ_EXTERNAL_STORAGE_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permiso concedido por el usuario, puedes proceder con la lógica de tu actividad
+                Log.d(TAG, "Permission granted");
             } else {
-                // Permiso denegado por el usuario, puedes mostrar un mensaje o tomar alguna acción adicional
+                Toast.makeText(FormActivity.this, "Please, accept the permissions", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -147,7 +147,6 @@ public class FormularioActivity extends Activity {
         if (requestCode == PICK_FILE_REQUEST) {
             if (resultCode == RESULT_OK && data != null) {
                 selectedFileUri = data.getData();
-               // selectedFileUri = selectedFileUri.getPath()
             }
         }
     }
@@ -191,7 +190,7 @@ public class FormularioActivity extends Activity {
 
                             }
                         } else {
-
+                            Log.d(TAG, "The user does not exist");
                         }
                     });
         }
@@ -219,18 +218,18 @@ public class FormularioActivity extends Activity {
                         .add(post)
                         .addOnSuccessListener(documentReference -> {
                             // Post added successfully
-                            Toast.makeText(FormularioActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FormActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
                             // Proceed to BookActivity
                             sendDataToBookActivity();
                         })
                         .addOnFailureListener(e -> {
                             // Handle errors
-                            Toast.makeText(FormularioActivity.this, "Error adding post", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FormActivity.this, "Error adding post", Toast.LENGTH_SHORT).show();
                         });
             });
         }).addOnFailureListener(e -> {
             // Handle image upload failure
-            Toast.makeText(FormularioActivity.this, "Error uploading image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FormActivity.this, "Error uploading image", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -244,7 +243,7 @@ public class FormularioActivity extends Activity {
         float rating = ratingBar.getRating();
 
         // Create intent to start BookActivity
-        Intent intent = new Intent(FormularioActivity.this, BookActivity.class);
+        Intent intent = new Intent(FormActivity.this, BookActivity.class);
         // Pass data to BookActivity using extras or intent extras
         intent.putExtra("title", title);
         intent.putExtra("author", author);

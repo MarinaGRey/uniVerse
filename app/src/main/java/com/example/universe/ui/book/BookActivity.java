@@ -130,8 +130,6 @@ public class BookActivity extends AppCompatActivity {
                         });
 
                         // Set onClickListener for the add comment button
-                        // Set onClickListener for the add comment button
-                        // Set onClickListener for the add comment button
                         add_comment.setOnClickListener(view -> {
                             // Retrieve the comment text from the EditText
                             String commentText = comment.getText().toString().trim();
@@ -188,6 +186,7 @@ public class BookActivity extends AppCompatActivity {
                                             Log.e(TAG, "Error fetching username from Firestore: " + e.getMessage());
                                             // Handle the error
                                         });
+                                // Handle all the errors showing them on the screen
                             } else {
                                 Toast.makeText(BookActivity.this, "Comment is empty", Toast.LENGTH_SHORT).show();
                             }

@@ -50,8 +50,6 @@ public class Notifications {
                         Log.e(TAG, "User document not found for userId: " + userId);
                     }
                 })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error fetching user document: " + e.getMessage());
-                });
+                .addOnFailureListener(e -> Log.e(TAG, "Error fetching user document: " + e.getMessage()));
     }
 }

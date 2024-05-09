@@ -28,7 +28,7 @@
         android:layout_marginTop="95dp"
         android:background="@null"
         android:src="@drawable/baseline_search_24"
-        android:text="Search"
+        android:text="@string/search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="50dp"
-            android:text="Category"
+            android:text="@string/category"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
 

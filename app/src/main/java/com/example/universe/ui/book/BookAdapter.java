@@ -23,9 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
+
 //The BookAdapter class is designed to connect data to a RecyclerView, allowing it to display a list of book items efficiently.
-
-
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
     private final List<Book_unit> books; // List of Book_unit items
     private final FirebaseAuth firebaseAuth;
@@ -99,13 +98,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         }).addOnFailureListener(e -> Log.e(TAG, "Error fetching image URL: " + e.getMessage()));
 
 
-
-
-
-
-
-
-
         // Query to check if the book is bookmarked
         DocumentReference bookmarkRef = db.collection("users")
                 .document(CurrentuserId)
@@ -147,10 +139,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
 
 
-
-
-
-
         View.OnClickListener itemClickListener = v -> {
             Log.e("BookAdapter", "Create intent to BookActivity");
             // Create an intent to open BookActivity
@@ -174,11 +162,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
         // If you have an image view inside the item, apply the same click listener
         holder.coverImageView.setOnClickListener(itemClickListener);
-
-
-
-
-
 
 
 
