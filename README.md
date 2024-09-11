@@ -1,6 +1,6 @@
 # Universe App
 
-![Alt text](logo_mobile-ai-brush-removebg-mb7hdfii.png)
+![Alt text](logo_mobile.jpg)
 
 This app, designed in collaboration with **Ángela Durán** and **Olga del Pozo** using **Android Studio (Java)**, aims to connect a community of readers.
 
